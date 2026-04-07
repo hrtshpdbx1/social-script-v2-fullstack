@@ -14,6 +14,8 @@
 
 
 
+
+
 Quelle route créer ?
 Si je fais u Get All avec toute les scenariosn plus de trav en dev car il faudra ensuite fair ela différence dans la query (est-ce qui se se trouve dans url est une difficulé, un theme, etc)
 Sinon faire des sous routes avec des get by catégory, bet by difficulté
@@ -21,3 +23,6 @@ Sinon faire des sous routes avec des get by catégory, bet by difficulté
 ...
 Pour imagienr quelles routes sont necessaires : penser aux fonctionnalités.
 Mon utilisateur a besoind 'accedder à tout els scenario 'get", mon utilisateur a besoin de ... etc 
+
+Pour qu'à terme un utilisateur puisse demander "tous les scénarios du thème Travail, peu importe la difficulté -->  table themes séparée
+Et un scénario aura deux clés étrangères : theme_id ET difficulty_id
