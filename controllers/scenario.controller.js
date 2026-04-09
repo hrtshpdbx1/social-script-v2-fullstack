@@ -4,10 +4,11 @@
 
 const scenarioController = {
     getAll: (req, res) => {
-        res.sendStatus(200).send("Voici tous les scenarios");
+
+        res.status(200).json({ message: "Voici tous les scenarios"});
     },
     getById: (req, res) => {
-        res.sendStatus(200).send(`Voici le scenario n°${req.params.id}`);
+         res.status(200).json({ message: `Voici le scenario n°${req.params.id}`, id: req.params.id  });
     },
 
     // getByAuthor (req, res) => {
@@ -16,7 +17,7 @@ const scenarioController = {
 
     insert: (req, res) => {
         const scenarioToInsert = req.body;
-        res.sendStatus(200).send({ scenarioToInsert });
+        res.status(201).json({ message: "Scénario reçu", data: scenarioToInsert });
     },
 
     update: (req, res) => {

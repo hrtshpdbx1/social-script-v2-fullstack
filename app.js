@@ -2,52 +2,40 @@
 //       APP.JS
 // -------------------
 
-// ! 1) Importer express + Créer le serveur
-const express = require('express'); //import d'express
-const server = express(); //création du serveur express
-const mongoose = require("mongoose"); // import mongoose
-
+// ? 1) Imports express et création du serveur
+const express = require('express');
+const server = express();
+const mongoose = require("mongoose");
 
 // ? Récupération des variables d'environnement :
 const { PORT, DB_CONNECTION } = process.env;
 
-
-
-
-// ? Pour paramétrer le fait que notre API doit comprendre quand du json arrive
+// ? 2) Configuration des middlewares globaux d'Express
+// ? Pour que l(API comprennnr quand du json arrive
 server.use(express.json());
 
-// ?  2/ Mongoose Middleware
-//création Middleware qui ... Mongoose
-//pour établir la connexion besoin d'importer Mongosse (cf plus haut ligne  require("mongoose");)
-server.use(async (req, res, next) => {
-    // a partir de cet objet nous pouvons essayer d'établir une connexion
-    // ici on essaye de se connecter mais ça peut prendre du temps ou echouer donc la méthode pour se connecter nous envoie une promisse. Il faut donc utiliser then catch  soit le asyn await avec le try catch (plus propre)
-    try {
-        // on essaye de se connecter
-        await mongoose.connect(DB_CONNECTION, { dbName: 'ClusterSocialScript' }); 
-        console.log("💾 Successfully log to the DB 🥳");
-        next(); //si ça  fonctionné on continue la requète
 
-    } catch (err) {
-        // si ça  ne marche pas on écrit dans la consolole un mess d'erreur
-        console.log(`🙅⛔Connection failed \n[Reason]\n ${err}`);
-        res.status(500).json({ statusCode: 500, message: 'Impossible de connecter à la DB ☹️' })
-    }
-})
-
-
-// ! 2) Traiter les requêtes
-// ? indiquer a l'app ou le rooting se trouve
-
-const router = require('./routes') // import de l'objet router qui se trouve dans le index.js 
+// ? 3) Branchement des routes
+const router = require('./routes') // indiquer où le rooting se trouve
 server.use('/api', router); // indiquer à notre serveur qu'il doit utiliser le router
 
+// ? 4) Connexion à MongoDB PUIS démarrage du serveur
 
-// ! 3) Écouter le serveur sur un port spécifique
-server.listen(PORT, () => {
-    console.log(`🚀 Serveur SocialScript démarré sur le port ${PORT}`);
-})
+async function startServer() {
+    try {
+        await mongoose.connect(DB_CONNECTION, { dbName: 'social_script' });
+        server.listen(PORT, () => {
+            console.log(`🚀 Serveur SocialScript connected to MongoDB on the port ${PORT}`);
+        })
+
+    } catch (err) {
+        console.log(`🙅⛔Connection failed \n[Reason]\n ${err}`);
+        process.exit(1)
+    }
+}
+startServer();
+
+
 
 
 // * dot.env --> Librarie pas aussi moderne que la fonctionnalité native de Node

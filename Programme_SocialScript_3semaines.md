@@ -57,11 +57,11 @@
 - [x] Créer un compte MongoDB Atlas (gratuit), créer un cluster
 - [x] Récupérer l'URL de connexion, la mettre dans `.env` (`MONGO_URI=...`)
 - [ ] Créer `config/database.js` qui exporte une fonction de connexion à Mongo
-- [ ] Appeler cette fonction dans `app.js` au démarrage
-- [ ] Vérifier dans la console : "✅ Connected to MongoDB"
-- [ ] Créer `models/difficulty.model.js` avec un Schema simple : `title`, `order` (number), `timestamps: true`
-- [ ] Créer `models/theme.model.js` : `title`, `order`, `timestamps: true`
-- [ ] Dans MongoDB Compass ou Atlas, insérer manuellement 3 difficultés (easy, medium, hard) et 3 thèmes de test
+- [ x] Appeler cette fonction dans `app.js` au démarrage
+- [x ] Vérifier dans la console : "✅ Connected to MongoDB"
+- [x ] Créer `models/difficulty.model.js` avec un Schema simple : `title`, `order` (number), `timestamps: true`
+- [ x] Créer `models/theme.model.js` : `title`, `order`, `timestamps: true`
+- [ x ] Dans MongoDB Compass ou Atlas, insérer manuellement 3 difficultés (easy, medium, hard) et 5 thèmes de test
 
 **Questions à te poser**
 - Qu'est-ce qu'un Schema Mongoose ? Quelle différence avec un Model ?

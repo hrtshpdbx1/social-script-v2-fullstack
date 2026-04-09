@@ -1,6 +1,6 @@
 const { Schema, model, Types } = require('mongoose');
 
-// SousSchema, Embed : car les choix n'ont pas de vie en dehors de leur scénario,
+// Sous schema, Embed : car les choix n'ont pas de vie en dehors de leur scénario,
 const choiceSchema = new Schema({
     responseText: {
     type: String,
@@ -65,17 +65,17 @@ const scenarioSchema = new Schema(
             default: 'pending'
         },
         authorId: {
-            type: Types.ObjectId,
-            ref: 'User',  /* Pour créer une référence vers le model User */
+            type: Schema.Types.ObjectId,
+            ref: 'User',  
             required: false, // pour phase dev
         },
         difficultyId: {
-            type: Types.ObjectId,
+           type: Schema.Types.ObjectId,
             ref: 'Difficulty',
             required: true,
         },
         themeId: {
-            type: Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Theme',
             required: true,
         }
@@ -83,11 +83,15 @@ const scenarioSchema = new Schema(
     {
         collection: 'scenarios',
         timestamps: true
+         /* Pour rajouter 2 champs automatiquement 
+    - createdAt : date -> Pour savoir quand la category aura été créée
+    - updatedAt : date -> Pour savoir quand la category a été modifiée pour la dernière fois */
+
     });
 
 // On va créer un model à partir de ce schema
 // Le premier paramètre et le nom du model, le deuxième, le schéma de ce model
 const Scenario = model('Scenario', scenarioSchema);
 
-// On exporet le model créé
+// On export le model créé
 module.exports = Scenario;
