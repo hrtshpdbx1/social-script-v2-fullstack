@@ -1,18 +1,26 @@
 // scenario.router.js
- const scenarioRouter = require('express').Router();
+const scenarioRouter = require('express').Router(); //creation
+const scenarioController = require('../controllers/scenario.controller');
 
 
- scenarioRouter.get('/', (req,res) => {
-    res.send("Voici tous les scenarios", 200)
- })
+scenarioRouter.route('/')
+.get(scenarioController.getAll)
+.post(scenarioController.insert)
 
- // Segment dynamique
- scenarioRouter.get('/:id', (req, res) => {
-    const id = req.params.id;
-     res.send(`Voici le scenario n°${id}`, 200)
- })
- scenarioRouter.post('/', (req, res) => {
-    res.send("Scenario ajouté avec succès", 200)
- })
 
- module.exports = scenarioRouter
+
+scenarioRouter.route('/:id')
+.get(scenarioController.getById)
+// .get(scenarioController.getByAuthor)
+// .get(scenarioController.getByTheme)
+// .get(scenarioController.getByDifficulty)
+.put(scenarioController.update)
+.delete(scenarioController.delete)
+.patch(scenarioController.updateStatus)
+
+
+// scenarioController.get("/author/:name", scenarioController.getByAuthor
+
+
+// Export
+module.exports = scenarioRouter

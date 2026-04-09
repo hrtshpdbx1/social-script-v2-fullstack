@@ -25,7 +25,7 @@ server.use(async (req, res, next) => {
     // ici on essaye de se connecter mais ça peut prendre du temps ou echouer donc la méthode pour se connecter nous envoie une promisse. Il faut donc utiliser then catch  soit le asyn await avec le try catch (plus propre)
     try {
         // on essaye de se connecter
-        await mongoose.connect(DB_CONNECTION, { dbName: 'TaskManager' }); // Pouet = une URL bidon
+        await mongoose.connect(DB_CONNECTION, { dbName: 'ClusterSocialScript' }); 
         console.log("💾 Successfully log to the DB 🥳");
         next(); //si ça  fonctionné on continue la requète
 
@@ -42,20 +42,6 @@ server.use(async (req, res, next) => {
 
 const router = require('./routes') // import de l'objet router qui se trouve dans le index.js 
 server.use('/api', router); // indiquer à notre serveur qu'il doit utiliser le router
-
-// ** OLD
-// en get sur http://localhost:3000/
-// server.get('/', (req, res) => {
-//     res.send({message : 'C\'est tout bon'}, 200);
-
-// }), 
-
-// server.get('/scenarios', (req, res) =>
-// res.send({message: 'Voici la liste des scenarios'}, 200))
-
-// server.get('/users', (req, res) =>
-//     res.send({ message: 'Voici la liste des utilisateur·ices' }, 200))
-
 
 
 // ! 3) Écouter le serveur sur un port spécifique
