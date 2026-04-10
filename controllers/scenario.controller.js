@@ -1,14 +1,35 @@
 // scenarios.controller.js
-// création de notre controller
-// Chaque fonction représentera une action qu'on peut faire sur la ressource.
+// Chaque fonction représente une action qu'on peut faire sur la ressource.
+
+// ? Import Service 
+const scenarioService = require('../services/scenario.service')
 
 const scenarioController = {
-    getAll: (req, res) => {
 
-        res.status(200).json({ message: "Voici tous les scenarios"});
+    /**
+    * Récupérer toutes les scenarios
+    * @param { Request } req
+    * @param { Response } res
+    */
+
+    getAll: async (req, res) => {
+
+        try {
+            const scenarios = await scenarioService.find()
+            const dataToSend = {
+                scenarios
+            };
+            // Si tout s'est bien passé, renvoie 200et data
+            res.status(200).json(dataToSend);
+            } catch (err) {
+
+            res.status(500).json({ statusCode: 500, message: 'Erreur lors de la récupération des scenarios dans la DB' });
+        }
+         
     },
+
     getById: (req, res) => {
-         res.status(200).json({ message: `Voici le scenario n°${req.params.id}`, id: req.params.id  });
+        res.status(200).json({ message: `Voici le scenario n°${req.params.id}`, id: req.params.id });
     },
 
     // getByAuthor (req, res) => {

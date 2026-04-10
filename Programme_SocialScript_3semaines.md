@@ -40,7 +40,9 @@
 
 **Questions à te poser**
 - Pourquoi on sépare routes / controllers / services ? Si tu ne sais pas répondre, relis ton cours avant de continuer.
-- Pourquoi `.env` ne doit JAMAIS être commit ?
+Séparation des préoccupations (separation of concerns). 
+ Réutilisabilité des composants (Un contrôleur par type de ressource, plus facile amodifier si besoin), Testabilité. Le changement de technologie : si passage de e MongoDB à PostgreSQL dans le futur, il faudra seuelement modfifier la logique dans les services 
+- Pourquoi `.env` ne doit JAMAIS être commit ? Info confidentielles
 
 **Validation** : serveur qui répond sur Insomnia, premier commit fait.
 
