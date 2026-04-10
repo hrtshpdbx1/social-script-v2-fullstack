@@ -1,8 +1,9 @@
-// scenarios.controller.js
+// scenario.controller.js
 // Chaque fonction représente une action qu'on peut faire sur la ressource.
 
 // ? Import Service 
-const scenarioService = require('../services/scenario.service')
+const scenarioService = require('../services/scenario.service');
+const { getByDifficulty } = require('./theme.controller');
 
 const scenarioController = {
 
@@ -15,25 +16,44 @@ const scenarioController = {
     getAll: async (req, res) => {
 
         try {
-            const scenarios = await scenarioService.find()
+            //  On extrait uniquement les paramètres autorisés depuis req.query
+            const { difficultyId, themeId } = req.query;
+
+            // 2. On construit un objet de filtre dynamique
+            const filter = {};
+            
+            //  n'ajoute les clés que si elles existent
+            if (difficultyId) {
+                filter.difficultyId = difficultyId;
+            }
+            if (themeId) {
+                filter.themeId = themeId;
+            }
+
+            // Si filter est vide {}, ça remontera tout (GET /scenarios)
+            // S'il contient des clés, ça filtrera (ex: GET /scenarios?themeId=456)
+            const scenarios = await scenarioService.find(filter);
+            
             const dataToSend = {
                 scenarios
             };
-            // Si tout s'est bien passé, renvoie 200et data
+            
+            // Si tout s'est bien passé, renvoie 200 et data
             res.status(200).json(dataToSend);
-            } catch (err) {
-
-            res.status(500).json({ statusCode: 500, message: 'Erreur lors de la récupération des scenarios dans la DB' });
+            
+        } catch (err) {
+            console.error(err); 
+            res.status(500).json({ 
+                statusCode: 500, 
+                message: 'Erreur lors de la récupération des scenarios dans la DB' 
+            });
         }
-         
     },
 
     getById: (req, res) => {
         res.status(200).json({ message: `Voici le scenario n°${req.params.id}`, id: req.params.id });
     },
 
-    // getByAuthor (req, res) => {
-    // },
 
 
     insert: (req, res) => {

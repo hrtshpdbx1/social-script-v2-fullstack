@@ -6,9 +6,10 @@ const Scenario = require('../models/scenario.model');
 
 const scenarioService = {
     // Fonction async pour trouver tous les scénarios dans la DB
-    find: async () => { 
+    // import param filter
+    find: async (filter) => { 
         try {
-            const scenarios = await Scenario.find()
+            const scenarios = await Scenario.find(filter)
             // une fois les données récupérées, retourn au controller
             return scenarios;
         }

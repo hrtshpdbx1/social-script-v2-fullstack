@@ -12,15 +12,14 @@ J3
 ✔ Insérer 2-3 scenarios de test dans Atlas (avec themeId et difficultyId des docs existants) @done(26-04-10 12:50)
 ✔ Tester GET /api/scenarios dans Insomnia et voir les vrais scénarios arriver @done(26-04-10 12:50)
 
-☐  Difficulty model 
+✔  Difficulty model @done(26-04-10 13:51)
 ☐ puis le service
 ☐ puis le controller
 ☐  puis la route, 
 
-Et pendant que tu codes, garde cette question en tête pour quand tu arriveras à la partie themes :
-
-Ton schéma relationnel (que j'ai vu dans tes fichiers projet) montre que les scénarios ont un Difficultylevel en string. Mais pour la route imbriquée GET /difficulties/:difficultyId/themes, tu vas avoir besoin d'une vraie référence entre Theme et Difficulty. Quelle différence ça fait en Mongoose entre stocker "Facile" comme string, versus stocker un ObjectId qui référence un document Difficulty ?
-
+** CHANGEMENT D'IMBRICATION 
+avec un GET /scenarios?difficultyId=xxx&themeId=yyy
+ le frontend filtre/affiche les thèmes disponibles à partir des scénarios existants.
 
 
 Questionn à Aude : Quelle route créer ?

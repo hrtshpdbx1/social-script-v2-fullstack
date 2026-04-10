@@ -1,3 +1,5 @@
+// theme.model.js 
+
 const { Schema, Types, model } = require('mongoose');
 
 
@@ -14,10 +16,16 @@ const themeSchema = new Schema({
     icon: {
         type: String,
         required: true,
-    }
+    },
+    difficultyId: {
+        type: Types.ObjectId,
+        ref: 'Difficulty',
+        /* Pour créer une référence vers le model Dif  */
+        required: true
+    },
 },
     {
-    
+
         timestamps: true
 
     });

@@ -80,12 +80,12 @@ Séparation des préoccupations (separation of concerns).
 - Implémenter les 2 premières routes de ton API
 
 **À faire**
-- [ ] Créer `routes/difficulties.router.js` avec la route `GET /`
-- [ ] Créer `controllers/difficulties.controller.js` avec une fonction `getAllDifficulties`
-- [ ] Créer `services/difficulties.service.js` avec la fonction qui fait `Difficulty.find()`
-- [ ] Brancher tout ça dans `app.js` : `app.use('/difficulties', difficultiesRouter)`
-- [ ] Tester sur Insomnia : `GET http://localhost:3000/difficulties` doit te renvoyer tes 3 difficultés
-- [ ] Faire la même chose pour les thèmes, MAIS avec la route imbriquée :
+- [X ] Créer `routes/difficulties.router.js` avec la route `GET /`
+- [ x] Créer `controllers/difficulties.controller.js` avec une fonction `getAllDifficulties`
+- [ x] Créer `services/difficulties.service.js` avec la fonction qui fait `Difficulty.find()`
+- [ x ] Brancher tout ça dans `router/index.js` : `app.use('/difficulties', difficultiesRouter)`
+- [ x ] Tester sur Insomnia : `GET http://localhost:3000/difficulties` doit te renvoyer tes 3 difficultés
+- [ x ] Faire la même chose pour les thèmes, MAIS avec la route imbriquée :
   - `routes/themes.router.js` (ou mettre la route dans `difficulties.router.js`, à toi de voir)
   - Route : `GET /difficulties/:difficultyId/themes`
   - ⚠️ Pour que ça marche, tes thèmes doivent avoir une référence à une difficulté ! Retourne sur ton model `Theme` et ajoute `difficultyId: { type: ObjectId, ref: 'Difficulty' }`
