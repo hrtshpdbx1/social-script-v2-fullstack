@@ -18,6 +18,6 @@ const router = require('express').Router();
 router.use('/scenarios', scenarioRouter)
 router.use('/difficulties',difficultyRouter )
 router.use('/difficulties/:difficultyId/themes', themeRouter)
-gi
+
 // ! 3) Export du router 
 module.exports = router;
