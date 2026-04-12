@@ -68,6 +68,7 @@ const scenarioSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User',  
             required: false, // pour phase dev
+            // todo : ref User.model
         },
         difficultyId: {
            type: Schema.Types.ObjectId,

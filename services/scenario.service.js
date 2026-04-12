@@ -7,10 +7,12 @@ const Scenario = require('../models/scenario.model');
 const scenarioService = {
     // Fonction async pour trouver tous les scénarios dans la DB
     // import param filter
-    find: async (filter) => { 
+    find: async (filter, fields = null) => { 
+        // quand getAll appelle find(filter) sans deuxième argument, fields = null, Mongoose ignore .select(null) -> tout est retourné.
         try {
-            const scenarios = await Scenario.find(filter)
-            // une fois les données récupérées, retourn au controller
+           
+            const scenarios = await Scenario.find(filter).select(fields)
+            // une fois les données récupérées, sont retournées au controller
             return scenarios;
         }
 

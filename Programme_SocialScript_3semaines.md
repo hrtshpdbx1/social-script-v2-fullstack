@@ -92,8 +92,12 @@ Séparation des préoccupations (separation of concerns).
   - Réinsère tes thèmes de test avec le bon `difficultyId`
 
 **Questions à te poser**
-- Quand tu fais `GET /difficulties/:difficultyId/themes`, comment le controller récupère-t-il `:difficultyId` depuis la requête ? (Indice : `req.params`)
+- Quand tu fais `GET /difficulties/:difficultyId/themes`, comment le controller récupère-t-il `:difficultyId` depuis la requête ? (Indice : `req.params`) : **
+**Le controller récupére :difficultyid depuis la requete avex req.params.difficultyId**
+**ex:  getByDifficutyId: (req, res) => {res.status(200).json({ message: {'Bla'}, id: req.params.difficultyId});}**
+**req.params c'est un élement de la route du navigateur : ex "scenario" dans http://localhost:3000/api/scenarios/1 (ne pas confondre avec "req.query" qui est l'élement textuel de l'url : ex GFG dans  http://localhost:3000/api/scenarios/search?name=GFG**
 - Quelle différence entre `Model.find()` et `Model.find({ difficultyId: xxx })` ?
+*find() sans argument renvoie tous les documents de la collection. find({ difficultyId: xxx }) filtre les élements qui correspondent au prédicat de l'argument*
 
 **Piège classique** : oublier de `await` les appels Mongo. Si tu reçois `Promise { <pending> }` dans ta réponse, c'est ça.
 
@@ -109,15 +113,15 @@ Séparation des préoccupations (separation of concerns).
 - Insérer des scénarios de test
 
 **À faire**
-- [ ] Créer `models/scenario.model.js`
-- [ ] Définir le Schema principal avec : `title`, `context`, `characterName`, `characterDialogue`, `characterAvatarSeed`, `status` (enum: 'pending'|'approved'|'rejected', default: 'pending'), `themeId` (ref), `difficultyId` (ref), `authorId` (ref User) — mais tu n'as pas encore User, donc mets un commentaire `// TODO: ref User` et laisse le champ optionnel pour l'instant
-- [ ] **Embed les choices** : dans ton schéma Scenario, ajoute un champ `choices` qui est un tableau de sous-documents, chacun avec : `responseText`, `reactionText`, `analysis`, `consequence`, `keyTakeaway`
-- [ ] Ajouter `timestamps: true`
-- [ ] Insérer manuellement 2-3 scénarios complets dans Atlas (avec les bons `themeId` et `difficultyId`)
+- [ x] Créer `models/scenario.model.js`
+- [ x] Définir le Schema principal avec : `title`, `context`, `characterName`, `characterDialogue`, `characterAvatarSeed`, `status` (enum: 'pending'|'approved'|'rejected', default: 'pending'), `themeId` (ref), `difficultyId` (ref), `authorId` (ref User) — mais tu n'as pas encore User, donc mets un commentaire `// TODO: ref User` et laisse le champ optionnel pour l'instant
+- [x ] **Embed les choices** : dans ton schéma Scenario, ajoute un champ `choices` qui est un tableau de sous-documents, chacun avec : `responseText`, `reactionText`, `analysis`, `consequence`, `keyTakeaway`
+- [ x] Ajouter `timestamps: true`
+- [ x] Insérer manuellement 2-3 scénarios complets dans Atlas (avec les bons `themeId` et `difficultyId`)
 
 **Questions à te poser**
-- Comment on définit un sous-document embed dans Mongoose ? (Cherche "Mongoose subdocuments" ou "embedded documents")
-- Pourquoi on met `status: 'pending'` par défaut ? (Réfléchis au workflow de modération)
+- Comment on définit un sous-document embed dans Mongoose ? (Cherche "Mongoose subdocuments" ou "embedded documents") : *On a fait un "Subdocument embedded" car ici les options n'ont pas de vie indépendante de leur scénarios. Ce sous shéma, ou subdocument est un tableau que l'on place en haut du document et qui est nesté dans un "shémat parent"*
+- Pourquoi on met `status: 'pending'` par défaut ? (Réfléchis au workflow de modération) : *Car on veut qu'une action de modération soit requise sur chaque nouveau scenari ajouté*
 
 **Validation** : un scénario complet visible dans Atlas avec ses 3 choices embed.
 

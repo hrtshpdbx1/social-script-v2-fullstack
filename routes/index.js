@@ -7,10 +7,9 @@ const difficultyRouter = require('./difficulties.router');
 const scenarioRouter = require('./scenarios.router');
 const themeRouter = require('./themes.router')
 
+
 // ! 1) Créer un objet "routeur" (router)
 const router = require('express').Router();
-
-
 
 // ! 2) Configurer les routes
 // Donne accès 
@@ -19,7 +18,6 @@ const router = require('express').Router();
 router.use('/scenarios', scenarioRouter)
 router.use('/difficulties',difficultyRouter )
 router.use('/difficulties/:difficultyId/themes', themeRouter)
-
-
+gi
 // ! 3) Export du router 
 module.exports = router;

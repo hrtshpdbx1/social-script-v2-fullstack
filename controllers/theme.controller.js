@@ -40,12 +40,12 @@ const themeController = {
         }
 
         catch (err) {
-            res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération de la tâche' })
+            res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération du thème' })
         }
 
-    }
+    }, 
 
-
+   
 
 
 }

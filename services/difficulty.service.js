@@ -7,7 +7,7 @@ const difficultyService = {
     find: async () => { 
         try {
             const difficulties = await Difficulty.find()
-            // une fois les données récupérées, retourn au controller
+            // une fois les données récupérées, retourne au controller
             return difficulties;
         }
 

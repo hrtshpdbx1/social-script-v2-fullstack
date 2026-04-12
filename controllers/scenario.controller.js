@@ -21,7 +21,7 @@ const scenarioController = {
 
             // 2. On construit un objet de filtre dynamique
             const filter = {};
-            
+
             //  n'ajoute les clés que si elles existent
             if (difficultyId) {
                 filter.difficultyId = difficultyId;
@@ -30,22 +30,22 @@ const scenarioController = {
                 filter.themeId = themeId;
             }
 
-            // Si filter est vide {}, ça remontera tout (GET /scenarios)
-            // S'il contient des clés, ça filtrera (ex: GET /scenarios?themeId=456)
+            // Si filter est vide {}, remonte tout (GET /scenarios)
+            // S'il contient des clés, filtre (ex: GET /scenarios?themeId=456)
             const scenarios = await scenarioService.find(filter);
-            
+
             const dataToSend = {
                 scenarios
             };
-            
+
             // Si tout s'est bien passé, renvoie 200 et data
             res.status(200).json(dataToSend);
-            
+
         } catch (err) {
-            console.error(err); 
-            res.status(500).json({ 
-                statusCode: 500, 
-                message: 'Erreur lors de la récupération des scenarios dans la DB' 
+            console.error(err);
+            res.status(500).json({
+                statusCode: 500,
+                message: 'Erreur lors de la récupération des scenarios dans la DB'
             });
         }
     },
@@ -54,6 +54,26 @@ const scenarioController = {
         res.status(200).json({ message: `Voici le scenario n°${req.params.id}`, id: req.params.id });
     },
 
+    getByThemeId: async (req, res) => {
+        try {
+            const themeId = req.params.themeId
+            const theme = await scenarioService.find(
+                { themeId, status: 'approved' },
+            'title context'
+        )
+            if (!theme) {
+                res.status(404).json({
+                    statusCode: 404,
+                    message: 'Pas de theme trouvé'
+                })
+            }
+            else res.status(200).json(theme);
+        }
+
+        catch (err) {
+            res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération du thème' })
+        }
+    },
 
 
     insert: (req, res) => {
@@ -75,5 +95,4 @@ const scenarioController = {
 
 }
 
-//on le rend importable en l'exportant
 module.exports = scenarioController
