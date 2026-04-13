@@ -156,7 +156,7 @@ Séparation des préoccupations (separation of concerns).
 
 ---
 
-## 🗓️ SEMAINE 2 — Authentification et écriture protégée
+## 🗓️ SEMAINE 2 — g et écriture protégée
 
 **Objectif de fin de semaine** : les utilisateurs peuvent s'inscrire, se connecter, et créer des scénarios. Les routes d'écriture sont protégées par JWT et par rôle.
 
@@ -167,21 +167,24 @@ Séparation des préoccupations (separation of concerns).
 - Implémenter l'inscription avec hash de mot de passe
 
 **À faire**
-- [ ] Installer `argon2`
-- [ ] Créer `models/user.model.js` avec : `firstName`, `lastName`, `email` (unique !), `password`, `role` (enum, default: 'user'), `timestamps: true`
-- [ ] Créer `routes/auth.router.js`, `controllers/auth.controller.js`, `services/auth.service.js`
-- [ ] Implémenter la route `POST /auth/register` :
+- [ x] Installer `argon2`
+- [ x] Créer `models/user.model.js` avec : `firstName`, `lastName`, `email` (unique !), `password`, `role` (enum, default: 'user'), `timestamps: true`
+- [x ] Créer `routes/auth.router.js`, `controllers/auth.controller.js`, `services/auth.service.js`
+- [ x] Implémenter la route `POST /auth/register` :
   - Récupérer `firstName`, `lastName`, `email`, `password` depuis `req.body`
   - Vérifier que l'email n'existe pas déjà → sinon, erreur 409
   - Hacher le mot de passe avec `argon2.hash(password)`
   - Créer le user en DB
   - Renvoyer un code 201 avec les infos du user **SANS le password** ⚠️
-- [ ] Tester sur Insomnia : créer un user, vérifier dans Atlas que le password est bien haché
+- [x] Tester sur Insomnia : créer un user, vérifier dans Atlas que le password est bien haché
 
 **Questions à te poser**
 - Pourquoi on hache les mots de passe au lieu de les stocker en clair ?
+*pour limiter les dégâts en cas de fuite de la base de données*
 - Pourquoi Argon2 plutôt que MD5 ou SHA1 ?
+*MD5 et SHA1 sont devenus obsolètes*
 - Pourquoi on ne renvoie JAMAIS le password dans la réponse API, même haché ?
+*La seule chose que l'API doit renvoyer après une connexion réussie, c'est un "Oui" accompagné d'un jeton de session temporaire (comme un JWT).*
 
 **Piège** : ne pas oublier `unique: true` sur le champ email dans le Schema.
 

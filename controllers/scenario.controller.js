@@ -49,12 +49,12 @@ const scenarioController = {
         }
     },
 
-/**
-    * Récupérer tous les scenarios par id
-    * sera utilisé par les admins/modérateurs pour consulter les scénarios et les valider, les rejeter, les modifier.*
-    * @param { Request } req
-    * @param { Response } res
-    */
+    /**
+        * Récupérer tous les scenarios par id
+        * sera utilisé par les admins/modérateurs pour consulter les scénarios et les valider, les rejeter, les modifier.*
+        * @param { Request } req
+        * @param { Response } res
+        */
 
     getById: async (req, res) => {
 
@@ -62,7 +62,7 @@ const scenarioController = {
             const scenarioId = req.params.id
             const scenario = await scenarioService.findById(scenarioId)
             const dataToSend = { scenario }
-            if (!scenario){
+            if (!scenario) {
                 res.status(404).json({ message: "L'Id ne correspond à aucun scenario" })
             } else { res.status(200).json(dataToSend) }
 
@@ -72,16 +72,18 @@ const scenarioController = {
 
     },
 
-/**
-    * Récupérer tous les scenarios en fonction de leur themeID
-    * sera utilisé par tous les utilisateur·ices 
-    * --> nécessité de filtré les scénatios approuvé
-    * @param { Request } req
-    * @param { Response } res
-    */
+   
+    /**
+        * getByThemeId
+        * ----------------------------------------------------
+        * Permet aux les utilisateur·ices de récupérer tous les scenarios (approuvés) en fonction de leur themeID
+        * @param { Request } req
+        * @param { Response } res
+        */
 
-    
-    // ** Version légère, "liste" --> on renvoit Title et context seulement
+
+
+    //  Version légère, "liste" --> on renvoit Title et context seulement
     getByThemeId: async (req, res) => {
         try {
             const themeId = req.params.themeId // On récupère le themeId depuis l'URL

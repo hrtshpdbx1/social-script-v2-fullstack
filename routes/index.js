@@ -3,6 +3,7 @@
 // Role : définition de toutes les routes de notre API (verb + url statique + params)
 
 // import scenarios.router
+const authRouter = require('./auth.router');
 const difficultyRouter = require('./difficulties.router');
 const scenarioRouter = require('./scenarios.router');
 const themeRouter = require('./themes.router')
@@ -22,6 +23,7 @@ router.use('/difficulties/:difficultyId/themes', themeRouter)
 // Thème est imbriqué dans difficultés 
 // ex d'URL pour accéder aux scénarios d'un thème
 // http://localhost:3000/api/difficulties/:difficultyId/themes/:themeId/scenarios
+router.use('/auth', authRouter)
 
 // ! 3) Export du router 
 module.exports = router;
