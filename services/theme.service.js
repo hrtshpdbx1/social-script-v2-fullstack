@@ -28,19 +28,7 @@ const themeService = {
             console.log(err);
             throw new Error(err);
         }
-    },
-    findByThemeId: async (themeId) => {
-        try {
-            const scenarionTHeme = await Scenario.find({ themeId, status: 'approved' }).select('title context')
-            // status : approuved -> status pending invisible
-            // select : ne renvoie que les champs listés (pas les choices)
-        }
-         catch (err) {
-
-            console.log(err);
-            throw new Error(err);
-        }
- },
+    }
 }
 
 module.exports = themeService

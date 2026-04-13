@@ -3,12 +3,11 @@
 
 // ? Import Service 
 const scenarioService = require('../services/scenario.service');
-const { getByDifficulty } = require('./theme.controller');
 
 const scenarioController = {
 
     /**
-    * Récupérer toutes les scenarios
+    * Récupérer tous les scenarios
     * @param { Request } req
     * @param { Response } res
     */
@@ -32,10 +31,10 @@ const scenarioController = {
 
             // Si filter est vide {}, remonte tout (GET /scenarios)
             // S'il contient des clés, filtre (ex: GET /scenarios?themeId=456)
-            const scenarios = await scenarioService.find(filter);
+            const allScenarios = await scenarioService.find(filter);
 
             const dataToSend = {
-                scenarios
+                scenarios: allScenarios
             };
 
             // Si tout s'est bien passé, renvoie 200 et data
@@ -50,31 +49,56 @@ const scenarioController = {
         }
     },
 
-    getById: (req, res) => {
-        res.status(200).json({ message: `Voici le scenario n°${req.params.id}`, id: req.params.id });
+/**
+    * Récupérer tous les scenarios par id
+    * sera utilisé par les admins/modérateurs pour consulter les scénarios et les valider, les rejeter, les modifier.*
+    * @param { Request } req
+    * @param { Response } res
+    */
+
+    getById: async (req, res) => {
+
+        try {
+            const scenarioId = req.params.id
+            const scenario = await scenarioService.findById(scenarioId)
+            const dataToSend = { scenario }
+            if (!scenario){
+                res.status(404).json({ message: "L'Id ne correspond à aucun scenario" })
+            } else { res.status(200).json(dataToSend) }
+
+        } catch (err) {
+            res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération des scenarios' })
+        }
+
     },
 
+/**
+    * Récupérer tous les scenarios en fonction de leur themeID
+    * sera utilisé par tous les utilisateur·ices 
+    * --> nécessité de filtré les scénatios approuvé
+    * @param { Request } req
+    * @param { Response } res
+    */
+
+    
+    // ** Version légère, "liste" --> on renvoit Title et context seulement
     getByThemeId: async (req, res) => {
         try {
-            const themeId = req.params.themeId
-            const theme = await scenarioService.find(
+            const themeId = req.params.themeId // On récupère le themeId depuis l'URL
+            const scenarios = await scenarioService.find(
                 { themeId, status: 'approved' },
-            'title context'
-        )
-            if (!theme) {
-                res.status(404).json({
-                    statusCode: 404,
-                    message: 'Pas de theme trouvé'
-                })
-            }
-            else res.status(200).json(theme);
-        }
+                'title context')
+            // on demande au service de trouver les scenarios qui ont ce themeId
+            // on filtre pour n'avoir que ceux qui sont approuvés
+            //  si aucun scénario ne correspond, Mongoose renvoit un tableau vide [], donc prédicat de taille 
+            // sinon, on renvoit title et context
 
-        catch (err) {
-            res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération du thème' })
+            const dataToSend = { scenarios }
+            res.status(200).json(dataToSend);
+        } catch (err) {
+            res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération des scenarios' })
         }
     },
-
 
     insert: (req, res) => {
         const scenarioToInsert = req.body;

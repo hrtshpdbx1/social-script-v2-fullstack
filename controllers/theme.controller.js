@@ -4,19 +4,19 @@ const themeService = require('../services/theme.service')
 const themeController = {
 
     /**
-* Récupérer toutes les scenarios
+* Récupérer tous les hhèmes
 * @param { Request } req
 * @param { Response } res
 */
 
     getAllThemes: async (req, res) => {
-
+// todo : vérifier utilité de cette fonctions
         try {
-            const themes = await themeService.find()
+            const allThemes = await themeService.find()
             const dataToSend = {
-                themes
+                themes: allThemes
             };
-            // Si tout s'est bien passé, renvoie 200et data
+            // Si tout s'est bien passé, renvoie 200 et data
             res.status(200).json(dataToSend);
         } catch (err) {
 
@@ -25,27 +25,24 @@ const themeController = {
 
     },
 
-    getByDifficulty: async (req, res) => {
-        // Si pas de theme récupéré (donc si l'id n'existe pas) l'API renvoie une erreur 404
+    getThemeByDifficulty: async (req, res) => {
         try {
-            const id = req.params.difficultyId
-            const theme = await themeService.findByDifficultyId(id);
-            if (!theme) {
-                res.status(404).json({
-                    statusCode: 404,
-                    message: 'Pas de theme trouvé'
-                })
-            }
-            else res.status(200).json(theme);
-        }
+            const { difficultyId } = req.params;
+            // On récupère le difficultyId depuis l'URL
+            const filteredThemes = await themeService.findByDifficultyId(difficultyId);
 
-        catch (err) {
+            // on demande au themeService de trouver les thème associé à ce difficultyId 
+            const dataToSend = {
+                themes: filteredThemes
+            };
+            res.status(200).json(dataToSend);
+            // on renvoit un tableau (vide ou plein)
+        } catch (err) {
             res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération du thème' })
         }
 
-    }, 
+    }
 
-   
 
 
 }

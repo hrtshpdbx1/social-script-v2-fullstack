@@ -10,13 +10,13 @@ scenarioRouter.route('/')
 
 
 scenarioRouter.route('/:id')
-.get(scenarioController.getById)
+.get(scenarioController.getById)  
 .put(scenarioController.update) //todo
 .delete(scenarioController.delete) //todo
 .patch(scenarioController.updateStatus) //todo
 
 
-// scenarioController.get("/author/:name", scenarioController.getByAuthor
+// scenarioRouter.get("/author/:name", scenarioController.getByAuthor
 
 
 // Export

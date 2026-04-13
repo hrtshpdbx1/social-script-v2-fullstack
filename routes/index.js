@@ -18,6 +18,10 @@ const router = require('express').Router();
 router.use('/scenarios', scenarioRouter)
 router.use('/difficulties',difficultyRouter )
 router.use('/difficulties/:difficultyId/themes', themeRouter)
+// ⬆️ permet d'accéder aux scenarios associé à un thème, lui même associé à un niveau de difficulté
+// Thème est imbriqué dans difficultés 
+// ex d'URL pour accéder aux scénarios d'un thème
+// http://localhost:3000/api/difficulties/:difficultyId/themes/:themeId/scenarios
 
 // ! 3) Export du router 
 module.exports = router;

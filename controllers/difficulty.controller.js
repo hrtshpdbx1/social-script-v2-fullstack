@@ -6,9 +6,9 @@ const difficultyController = {
 getAllDifficulties: async (req, res) => {
 
         try {
-            const difficulties = await difficultyService.find()
+            const allDifficulties = await difficultyService.find()
             const dataToSend = {
-                difficulties
+                difficulties : allDifficulties
             };
             // Si tout s'est bien passé, renvoie 200et data
             res.status(200).json(dataToSend);

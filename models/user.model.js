@@ -27,7 +27,7 @@ const userSchema = new Schema(
             type : String,
             enum : ['user', 'moderator','admin'], 
             /* enum permet de donner une liste de chaines autorisées, si on encode autre chose -> erreur */
-            default : 'User' 
+            default : 'user' 
             /* default permet de mettre une valeur par défaut, si on ne renseigne pas de role, ce sera User qui sera inséré */
         }
     }, 

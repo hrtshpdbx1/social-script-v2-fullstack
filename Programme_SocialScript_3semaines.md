@@ -134,19 +134,21 @@ Séparation des préoccupations (separation of concerns).
 - Comprendre la projection Mongoose (renvoyer seulement certains champs)
 
 **À faire**
-- [ ] Créer `routes/scenarios.router.js`, `controllers/scenarios.controller.js`, `services/scenarios.service.js`
-- [ ] Route 1 : `GET /themes/:themeId/scenarios` — version **légère**
+- [x ] Créer `routes/scenarios.router.js`, `controllers/scenarios.controller.js`, `services/scenarios.service.js`
+- [ x] Route 1 : `GET /themes/:themeId/scenarios` — version **légère**
   - Dans le service : `Scenario.find({ themeId, status: 'approved' }).select('title context')`
   - ⚠️ Le filtre `status: 'approved'` est crucial : un scénario pending ne doit pas être visible publiquement !
   - ⚠️ Le `.select()` permet de ne renvoyer que les champs listés (pas les choices)
-- [ ] Route 2 : `GET /scenarios/:scenarioId` — version **complète**
+- [ x] Route 2 : `GET /scenarios/:scenarioId` — version **complète**
   - Dans le service : `Scenario.findById(scenarioId)` (sans filtre de status pour l'instant, on verra)
   - Renvoie tout, y compris les choices
-- [ ] Tester les 2 routes sur Insomnia avec tes scénarios de test
+- [ x] Tester les 2 routes sur Insomnia avec tes scénarios de test
 
 **Questions à te poser**
-- Pourquoi on filtre `status: 'approved'` sur la route liste mais pas (encore) sur la route détail ?
-- Qu'est-ce qui se passe si tu appelles `GET /scenarios/xyz` avec un ID qui n'existe pas ? Ton API renvoie quoi ? Est-ce que c'est un comportement acceptable, ou tu devrais gérer le cas ?
+- Pourquoi on filtre `status: 'approved'` sur la route liste mais pas (encore) sur la route détail ? 
+*GET /difficulties/123/themes/456/scenarios (route liste) --> le status: 'approved' est nécessaire sur cette roite parce que les utilisateur·ices lambda ne doivent voir que les scénarios validés.*  
+*GET /scenarios/:id --> sera utilisé par les admins/modérateurs pour consulter tous les scénarios peu importe leur statut — pour les valider, les rejeter, les modifier.*
+- Qu'est-ce qui se passe si tu appelles `GET /scenarios/xyz` avec un ID qui n'existe pas ? Ton API renvoie quoi ? Est-ce que c'est un comportement acceptable, ou tu devrais gérer le cas ? *une 404 avec le message message: "L'Id ne correspond à aucun scenario")*
 
 **Validation** : tu peux faire un parcours complet en lecture sur Insomnia : liste difficultés → thèmes d'une difficulté → scénarios d'un thème → détail d'un scénario. 🎉
 
