@@ -203,7 +203,7 @@ Séparation des préoccupations (separation of concerns).
 - [x] Regarder Demo Aude du 20 janv 26 1/2
 - [x] Installer `jsonwebtoken`
 - [x] Ajouter `JWT_SECRET=...` dans ton `.env` (une longue chaîne aléatoire)
-- [ ] Implémenter la route `POST /auth/login` :
+- [x] Implémenter la route `POST /auth/login` :
   - Récupérer `email` et `password` depuis `req.body`
   - Chercher le user par email → sinon erreur 401
   - Vérifier le password avec `argon2.verify(user.password, password)` → sinon erreur 401
@@ -423,8 +423,3 @@ Séparation des préoccupations (separation of concerns).
 
 Mais ça, c'est quand tu auras fini la v1 proprement.
 
----
-
-**Rappel** : si tu bloques sur un point, ne galère pas 3h toute seule. Viens me demander, on décortique ensemble. Mais essaie d'abord pendant 30-45 min avant de venir, pour que la question soit mûre.
-
-Bon courage ! 💪
