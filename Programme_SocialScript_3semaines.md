@@ -59,11 +59,11 @@ Séparation des préoccupations (separation of concerns).
 - [x] Créer un compte MongoDB Atlas (gratuit), créer un cluster
 - [x] Récupérer l'URL de connexion, la mettre dans `.env` (`MONGO_URI=...`)
 - [ ] Créer `config/database.js` qui exporte une fonction de connexion à Mongo
-- [ x] Appeler cette fonction dans `app.js` au démarrage
-- [x ] Vérifier dans la console : "✅ Connected to MongoDB"
-- [x ] Créer `models/difficulty.model.js` avec un Schema simple : `title`, `order` (number), `timestamps: true`
-- [ x] Créer `models/theme.model.js` : `title`, `order`, `timestamps: true`
-- [ x ] Dans MongoDB Compass ou Atlas, insérer manuellement 3 difficultés (easy, medium, hard) et 5 thèmes de test
+- [x] Appeler cette fonction dans `app.js` au démarrage
+- [x] Vérifier dans la console : "✅ Connected to MongoDB"
+- [x] Créer `models/difficulty.model.js` avec un Schema simple : `title`, `order` (number), `timestamps: true`
+- [x] Créer `models/theme.model.js` : `title`, `order`, `timestamps: true`
+- [x] Dans MongoDB Compass ou Atlas, insérer manuellement 3 difficultés (easy, medium, hard) et 5 thèmes de test
 
 **Questions à te poser**
 - Qu'est-ce qu'un Schema Mongoose ? Quelle différence avec un Model ?
@@ -80,12 +80,12 @@ Séparation des préoccupations (separation of concerns).
 - Implémenter les 2 premières routes de ton API
 
 **À faire**
-- [X ] Créer `routes/difficulties.router.js` avec la route `GET /`
-- [ x] Créer `controllers/difficulties.controller.js` avec une fonction `getAllDifficulties`
-- [ x] Créer `services/difficulties.service.js` avec la fonction qui fait `Difficulty.find()`
-- [ x ] Brancher tout ça dans `router/index.js` : `app.use('/difficulties', difficultiesRouter)`
-- [ x ] Tester sur Insomnia : `GET http://localhost:3000/difficulties` doit te renvoyer tes 3 difficultés
-- [ x ] Faire la même chose pour les thèmes, MAIS avec la route imbriquée :
+- [x] Créer `routes/difficulties.router.js` avec la route `GET /`
+- [x] Créer `controllers/difficulties.controller.js` avec une fonction `getAllDifficulties`
+- [x] Créer `services/difficulties.service.js` avec la fonction qui fait `Difficulty.find()`
+- [x] Brancher tout ça dans `router/index.js` : `app.use('/difficulties', difficultiesRouter)`
+- [x] Tester sur Insomnia : `GET http://localhost:3000/difficulties` doit te renvoyer tes 3 difficultés
+- [x] Faire la même chose pour les thèmes, MAIS avec la route imbriquée :
   - `routes/themes.router.js` (ou mettre la route dans `difficulties.router.js`, à toi de voir)
   - Route : `GET /difficulties/:difficultyId/themes`
   - ⚠️ Pour que ça marche, tes thèmes doivent avoir une référence à une difficulté ! Retourne sur ton model `Theme` et ajoute `difficultyId: { type: ObjectId, ref: 'Difficulty' }`
@@ -113,11 +113,11 @@ Séparation des préoccupations (separation of concerns).
 - Insérer des scénarios de test
 
 **À faire**
-- [ x] Créer `models/scenario.model.js`
-- [ x] Définir le Schema principal avec : `title`, `context`, `characterName`, `characterDialogue`, `characterAvatarSeed`, `status` (enum: 'pending'|'approved'|'rejected', default: 'pending'), `themeId` (ref), `difficultyId` (ref), `authorId` (ref User) — mais tu n'as pas encore User, donc mets un commentaire `// TODO: ref User` et laisse le champ optionnel pour l'instant
+- [x] Créer `models/scenario.model.js`
+- [x] Définir le Schema principal avec : `title`, `context`, `characterName`, `characterDialogue`, `characterAvatarSeed`, `status` (enum: 'pending'|'approved'|'rejected', default: 'pending'), `themeId` (ref), `difficultyId` (ref), `authorId` (ref User) — mais tu n'as pas encore User, donc mets un commentaire `// TODO: ref User` et laisse le champ optionnel pour l'instant
 - [x ] **Embed les choices** : dans ton schéma Scenario, ajoute un champ `choices` qui est un tableau de sous-documents, chacun avec : `responseText`, `reactionText`, `analysis`, `consequence`, `keyTakeaway`
-- [ x] Ajouter `timestamps: true`
-- [ x] Insérer manuellement 2-3 scénarios complets dans Atlas (avec les bons `themeId` et `difficultyId`)
+- [x] Ajouter `timestamps: true`
+- [x] Insérer manuellement 2-3 scénarios complets dans Atlas (avec les bons `themeId` et `difficultyId`)
 
 **Questions à te poser**
 - Comment on définit un sous-document embed dans Mongoose ? (Cherche "Mongoose subdocuments" ou "embedded documents") : *On a fait un "Subdocument embedded" car ici les options n'ont pas de vie indépendante de leur scénarios. Ce sous shéma, ou subdocument est un tableau que l'on place en haut du document et qui est nesté dans un "shémat parent"*
@@ -134,15 +134,15 @@ Séparation des préoccupations (separation of concerns).
 - Comprendre la projection Mongoose (renvoyer seulement certains champs)
 
 **À faire**
-- [x ] Créer `routes/scenarios.router.js`, `controllers/scenarios.controller.js`, `services/scenarios.service.js`
-- [ x] Route 1 : `GET /themes/:themeId/scenarios` — version **légère**
+- [x] Créer `routes/scenarios.router.js`, `controllers/scenarios.controller.js`, `services/scenarios.service.js`
+- [x] Route 1 : `GET /themes/:themeId/scenarios` — version **légère**
   - Dans le service : `Scenario.find({ themeId, status: 'approved' }).select('title context')`
   - ⚠️ Le filtre `status: 'approved'` est crucial : un scénario pending ne doit pas être visible publiquement !
   - ⚠️ Le `.select()` permet de ne renvoyer que les champs listés (pas les choices)
-- [ x] Route 2 : `GET /scenarios/:scenarioId` — version **complète**
+- [x] Route 2 : `GET /scenarios/:scenarioId` — version **complète**
   - Dans le service : `Scenario.findById(scenarioId)` (sans filtre de status pour l'instant, on verra)
   - Renvoie tout, y compris les choices
-- [ x] Tester les 2 routes sur Insomnia avec tes scénarios de test
+- [x] Tester les 2 routes sur Insomnia avec tes scénarios de test
 
 **Questions à te poser**
 - Pourquoi on filtre `status: 'approved'` sur la route liste mais pas (encore) sur la route détail ? 
@@ -156,7 +156,7 @@ Séparation des préoccupations (separation of concerns).
 
 ---
 
-## 🗓️ SEMAINE 2 — g et écriture protégée
+## 🗓️ SEMAINE 2 — Authentification et écriture protégée
 
 **Objectif de fin de semaine** : les utilisateurs peuvent s'inscrire, se connecter, et créer des scénarios. Les routes d'écriture sont protégées par JWT et par rôle.
 
@@ -167,10 +167,11 @@ Séparation des préoccupations (separation of concerns).
 - Implémenter l'inscription avec hash de mot de passe
 
 **À faire**
-- [ x] Installer `argon2`
-- [ x] Créer `models/user.model.js` avec : `firstName`, `lastName`, `email` (unique !), `password`, `role` (enum, default: 'user'), `timestamps: true`
-- [x ] Créer `routes/auth.router.js`, `controllers/auth.controller.js`, `services/auth.service.js`
-- [ x] Implémenter la route `POST /auth/register` :
+- [x] Regarder Demo Aude du 19 janv 26 2/2
+- [x] Installer `argon2`
+- [x] Créer `models/user.model.js` avec : `firstName`, `lastName`, `email` (unique !), `password`, `role` (enum, default: 'user'), `timestamps: true`
+- [x] Créer `routes/auth.router.js`, `controllers/auth.controller.js`, `services/auth.service.js`
+- [x] Implémenter la route `POST /auth/register` :
   - Récupérer `firstName`, `lastName`, `email`, `password` depuis `req.body`
   - Vérifier que l'email n'existe pas déjà → sinon, erreur 409
   - Hacher le mot de passe avec `argon2.hash(password)`
@@ -199,21 +200,23 @@ Séparation des préoccupations (separation of concerns).
 - Implémenter le login qui renvoie un token
 
 **À faire**
-- [ ] Installer `jsonwebtoken`
-- [ ] Ajouter `JWT_SECRET=...` dans ton `.env` (une longue chaîne aléatoire)
+- [x] Regarder Demo Aude du 20 janv 26 1/2
+- [x] Installer `jsonwebtoken`
+- [x] Ajouter `JWT_SECRET=...` dans ton `.env` (une longue chaîne aléatoire)
 - [ ] Implémenter la route `POST /auth/login` :
   - Récupérer `email` et `password` depuis `req.body`
   - Chercher le user par email → sinon erreur 401
   - Vérifier le password avec `argon2.verify(user.password, password)` → sinon erreur 401
   - Générer un token avec `jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' })`
   - Renvoyer `{ token, user: { id, email, role } }`
-- [ ] Tester sur Insomnia : login réussi → tu reçois un token
-- [ ] Copier ce token et le décoder sur https://jwt.io pour voir ce qu'il y a dedans
+- [x] Tester sur Insomnia : login réussi → tu reçois un token
+- [x] Copier ce token et le décoder sur https://jwt.io pour voir ce qu'il y a dedans
 
 **Questions à te poser**
 - Pourquoi on met `userId` et `role` dans le payload du JWT ? Qu'est-ce qu'on va en faire après ?
-- Est-ce que c'est grave si quelqu'un lit le contenu du JWT (sans le modifier) ? (Indice : réponse non-évidente)
-- Pourquoi on met une expiration au token ?
+*On va les utiliser dans le front (ex "Bonjour Machine") mais aussi car le rôle va déterminer les accès/droits que les middlewares vont autoriser ou pas*  
+- Est-ce que c'est grave si quelqu'un lit le contenu du JWT (sans le modifier) ? (Indice : réponse non-évidente) *Le JWT est encodé, pas chiffré : La partie "payload"  d'un JWT est simplement encodée en Base64Url. N'importe qui peut décoder cette partie en quelques secondes (via des outils comme jwt.io) pour lire les informations qui y sont stockées sans avoir besoin de la clé secrète. Donc nejamais mettre de données sensibles dans le payload d'un JWT.*
+- Pourquoi on met une expiration au token ? *Limiter l'impact d'un vol de jeton*
 
 **Validation** : tu reçois un token au login, tu peux le décoder sur jwt.io et voir ton userId et ton role.
 
