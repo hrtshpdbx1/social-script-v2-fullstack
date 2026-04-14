@@ -25,5 +25,6 @@ router.use('/difficulties/:difficultyId/themes', themeRouter)
 // http://localhost:3000/api/difficulties/:difficultyId/themes/:themeId/scenarios
 router.use('/auth', authRouter)
 
+
 // ! 3) Export du router 
 module.exports = router;

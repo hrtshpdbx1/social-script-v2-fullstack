@@ -72,7 +72,7 @@ const scenarioController = {
 
     },
 
-   
+
     /**
         * getByThemeId
         * ----------------------------------------------------
@@ -95,6 +95,17 @@ const scenarioController = {
             //  si aucun scénario ne correspond, Mongoose renvoit un tableau vide [], donc prédicat de taille 
             // sinon, on renvoit title et context
 
+            const dataToSend = { scenarios }
+            res.status(200).json(dataToSend);
+        } catch (err) {
+            res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération des scenarios' })
+        }
+    },
+
+    getByUser: async (req, res) => {
+        try {
+            const userId = req.params.id
+            const scenarios = await scenarioService.find({ authorId: userId });
             const dataToSend = { scenarios }
             res.status(200).json(dataToSend);
         } catch (err) {

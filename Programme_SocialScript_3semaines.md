@@ -229,7 +229,8 @@ Séparation des préoccupations (separation of concerns).
 - Créer les 2 middlewares qui vont protéger toutes tes routes sensibles
 
 **À faire**
-- [ ] Créer `middlewares/auth.middleware.js` avec une fonction `requireAuth` :
+- [x] Regarder demo 20 janv 1/2
+- [x] Créer `middlewares/auth.middleware.js` avec une fonction `requireAuth` :
   - Récupérer le token depuis `req.headers.authorization` (format `Bearer xxx`)
   - Si absent → 401
   - Vérifier avec `jwt.verify(token, process.env.JWT_SECRET)` → si invalide → 401
