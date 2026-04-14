@@ -3,7 +3,7 @@
 // Import de la librairie jsonwebtoken
 const jwt = require('jsonwebtoken');
 
-// Récupération des variables d'environnement dont on a besoin pour créer(et décoder) le token
+// Récupération des variables d'environnement dont on a besoin pour créer (et décoder) le token
 const { JWT_ISSUER, JWT_AUDIENCE, JWT_SECRET } = process.env;
 
 // On va créer un objet dans lequel il y aura 2 fonctions :
