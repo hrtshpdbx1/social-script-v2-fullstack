@@ -3,7 +3,7 @@
 // Import de la librairie jsonwebtoken
 const jwt = require('jsonwebtoken');
 
-// Récupération des variables d'environnement dont on a besoin pour créer (et décoder) le token
+// Récupération des variables d'environnement dont on a besoin pour créer(et décoder) le token
 const { JWT_ISSUER, JWT_AUDIENCE, JWT_SECRET } = process.env;
 
 // On va créer un objet dans lequel il y aura 2 fonctions :
@@ -63,7 +63,7 @@ const jwtUtils = {
                 reject(new Error('Pas de token reçu'));
             }
 
-            //? 2) Si y'a bien un token, on peut s'occuper de le décoder
+            //? 2) Si y'a bien un token, on peut s'occupe de le décoder
             // Pour ça on va faire appel à la méthode verify qui prend plusieurs paramètres : 
             // - Le premier, c'est le token à décoder
             // - Le deuxième, c'est le secret

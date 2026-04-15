@@ -48,7 +48,7 @@ const authController = {
 
             // si pas de user trouvée, les infos de connextions ne sont pas bonnes
             if (!userFound) {
-               return res.status(401).json({ statusCode: 401, message: 'Les informations de connexion ne sont pas bonnes' });
+                return res.status(401).json({ statusCode: 401, message: 'Les informations de connexion ne sont pas bonnes' });
             } else {
                 // on génère un token
                 const token = await jwtUtils.generate(userFound);

@@ -1,11 +1,5 @@
 # Programme Social Script — Refonte Backend (3 semaines)
 
-> **Philosophie** : construire par couches, tester à chaque étape, comprendre ce qu'on fait.
-> **Stack** : Node.js + Express + MongoDB (Mongoose) + JWT + Argon2
-> **Règle d'or** : si une étape ne fonctionne pas, on ne passe pas à la suivante. On débugge.
-
----
-
 ## 🗓️ SEMAINE 1 — Fondations, données, lectures publiques
 
 **Objectif de fin de semaine** : une API qui sert en lecture seule (sans auth) toutes les données de Social Script. Tu peux naviguer de `/difficulties` → `/themes` → `/scenarios` depuis Insomnia.
@@ -264,20 +258,20 @@ Séparation des préoccupations (separation of concerns).
 - Connecter l'auth au modèle Scenario
 
 **À faire**
-- [ ] Retourner dans `models/scenario.model.js` et rendre `authorId` obligatoire avec la ref vers User
-- [ ] Implémenter `POST /scenarios` dans ton router/controller/service :
+- [x] Retourner dans `models/scenario.model.js` et rendre `authorId` obligatoire avec la ref vers User
+- [x] Implémenter `POST /scenarios` dans ton router/controller/service :
   - Protégée par `requireAuth` (n'importe quel user connecté peut proposer)
   - Récupérer les données depuis `req.body`
   - Récupérer l'`authorId` depuis `req.user.userId` (pas depuis le body ! ⚠️)
   - Forcer `status: 'pending'` côté serveur (ne jamais faire confiance au client)
   - Créer le scénario et le renvoyer avec code 201
-- [ ] Tester sur Insomnia :
+- [x] Tester sur Insomnia :
   - Sans token → 401
   - Avec token → 201, scénario créé avec status pending
   - Vérifier dans Atlas que l'`authorId` correspond bien à ton user
 
 **Questions à te poser**
-- Pourquoi on ne fait JAMAIS confiance au `authorId` envoyé dans `req.body` ?
+- Pourquoi on ne fait JAMAIS confiance au `authorId` envoyé dans `req.body` ? 
 - Pourquoi on force `status: 'pending'` côté serveur même si le client envoie autre chose ?
 - Qu'est-ce qui se passe si le body contient des champs bizarres en plus (genre `isAdmin: true`) ? Comment Mongoose se comporte ? (Indice : regarde "strict mode" dans la doc)
 

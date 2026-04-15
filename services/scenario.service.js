@@ -30,6 +30,25 @@ const scenarioService = {
             console.log(err);
             throw new Error(err);
         }
+    },
+
+
+
+    create: async (scenario) => {
+        try {
+            const scenarioToAdd = new Scenario({...scenario,'status': 'pending'});
+            // Créer un nouvel objet à partir du model, en forçant status: pending
+   
+            // Sauvegarde cet objet en DB 
+            await scenarioToAdd.save();
+            // Renvoyer l'objet créé
+            return scenarioToAdd
+
+
+        } catch (err) {
+            console.log(err);
+            throw new Error(err);
+        }
     }
 
 }

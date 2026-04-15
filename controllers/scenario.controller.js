@@ -113,9 +113,26 @@ const scenarioController = {
         }
     },
 
+    /**
+    * Ajouter un scénario
+    * @param { Request } req
+    * @param { Response } res
+    */
+
     insert: (req, res) => {
-        const scenarioToInsert = req.body;
-        res.status(201).json({ message: "Scénario reçu", data: scenarioToInsert });
+        try {
+            const addedScenario = req.body;
+            const authorId = req.user.id;
+            // Pour respecter les principes REST, on doit rajouter à la réponse, une url qui permet de consulter la valeur ajoutée
+            res.location(`/api/scenario/${addedScenario.id}`);
+            res.status(201).json({ 
+                message: `Scénario de ${authorId} reçu`, 
+                data: addedScenario});
+        } catch (err) {
+            res.status(500).json({ statusCode: 500, message: 'Erreur lors de l\'ajout dans la DB' })
+        }
+
+
     },
 
     update: (req, res) => {

@@ -35,7 +35,7 @@ const userAuthorization = () => {
             const isOwner = userId.toString() === userRouterId.toString();
 
             if (isAdmin || isOwner) {
-                return next();
+                
             }
             // Si on arrive ici, c'est que ni l'un ni l'autre n'est vrai
             return res.status(403).json({

@@ -3,24 +3,25 @@ const { Schema, model, Types } = require('mongoose');
 // Sous schema, Embed : car les choix n'ont pas de vie en dehors de leur scénario,
 const choiceSchema = new Schema({
     responseText: {
-    type: String,
-    required: true
-},
+        type: String,
+        required: true
+    },
     reactionText: {
-    type: String,
-    required: true
-},
+        type: String,
+        required: true
+    },
     analysis: {
-    type: String,
-    required: true
-},
+        type: String,
+        required: true
+    },
     consequence: {
-    type: String,
-    required: true
-},
+        type: String,
+        required: true
+    },
     keyTakeaway: {
-    type: String,
-    required: true}
+        type: String,
+        required: true
+    }
 },
     { _id: false });
 
@@ -55,7 +56,7 @@ const scenarioSchema = new Schema(
         choices: {
             type: [choiceSchema],
             validate: {
-                validator: function (arr) { return arr.length ===  3; },
+                validator: function (arr) { return arr.length === 3; },
                 message: 'Un scénario doit avoir 3 choix'
             }
         },
@@ -66,15 +67,16 @@ const scenarioSchema = new Schema(
         },
         authorId: {
             type: Schema.Types.ObjectId,
-            ref: 'User',  
-            required: false, // pour phase dev
-            // todo : ref User.model
+            ref: 'User',
+            required: true,
         },
+
         difficultyId: {
-           type: Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Difficulty',
             required: true,
         },
+        
         themeId: {
             type: Schema.Types.ObjectId,
             ref: 'Theme',
@@ -84,9 +86,9 @@ const scenarioSchema = new Schema(
     {
         collection: 'scenarios',
         timestamps: true
-         /* Pour rajouter 2 champs automatiquement 
-    - createdAt : date -> Pour savoir quand la category aura été créée
-    - updatedAt : date -> Pour savoir quand la category a été modifiée pour la dernière fois */
+        /* Pour rajouter 2 champs automatiquement 
+   - createdAt : date -> Pour savoir quand la category aura été créée
+   - updatedAt : date -> Pour savoir quand la category a été modifiée pour la dernière fois */
 
     });
 
