@@ -1,7 +1,10 @@
 // userAuthorization.middleware.js
 // Permet de vérifier si dans le token, l'id de l'utilisateur·ice lui permet de faire ce qu'il/elle demande
+// pourra être utiliser si on fait un user/GetById
+// utilisation : modifier son profil, voir ses propres propositions de scénarios ou consulter son historique de scénarios déjà testés)
 
-// pourra être utiliser si on fait un user/GetById, par exemple pour afficher notre profil (et pas celui d'un autre) et nos scénarios proposés
+//todo : le brancher
+
 const User = require('../../models/user.model');
 
 const userAuthorization = () => {

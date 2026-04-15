@@ -236,19 +236,22 @@ Séparation des préoccupations (separation of concerns).
   - Vérifier avec `jwt.verify(token, process.env.JWT_SECRET)` → si invalide → 401
   - Attacher le payload à `req.user = decoded`
   - Appeler `next()`
-- [ ] Créer `middlewares/role.middleware.js` avec une fonction `requireRole(...allowedRoles)` qui :
+- [x ] Créer `middlewares/role.middleware.js` avec une fonction `requireRole(...allowedRoles)` qui :
   - Vérifie que `req.user.role` est dans `allowedRoles` (c'est donc une "higher-order function", elle prend des args et renvoie un middleware)
   - Sinon → 403
-- [ ] Créer une route test protégée `GET /auth/me` qui utilise `requireAuth` et renvoie les infos du user connecté
-- [ ] Tester sur Insomnia :
+- [x ] Créer une route test protégée `GET /auth/me` qui utilise `requireAuth` et renvoie les infos du user connecté
+- [ x] Tester sur Insomnia :
   - Sans token → 401 ✅
   - Avec un token bidon → 401 ✅
   - Avec un vrai token → 200 avec les infos du user ✅
 
 **Questions à te poser**
 - Quelle différence entre 401 (Unauthorized) et 403 (Forbidden) ? Quand utiliser lequel ?
+*401 veut dire qu'une connexione st requise pour arriver sur la page, 403 veut dire qu'on est pas authorisé, meme si on est connecté, par exemple si on est un simple user et pas un admin* 
 - Pourquoi `requireRole` est une fonction qui renvoie une fonction, au lieu d'être directement un middleware ?
+*Car on a besoin d'argument, ici "allowedRoles"*
 - Dans Insomnia, où est-ce que tu colles ton token pour qu'il soit envoyé dans le header `Authorization` ?
+*dans Auth > Bearer Token > Token*
 
 **Validation** : tu as 2 middlewares réutilisables prêts à protéger n'importe quelle route.
 

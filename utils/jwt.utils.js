@@ -63,7 +63,7 @@ const jwtUtils = {
                 reject(new Error('Pas de token reçu'));
             }
 
-            //? 2) Si y'a bien un token, on peut s'occupe de le décoder
+            //? 2) Si y'a bien un token, on peut s'occuper de le décoder
             // Pour ça on va faire appel à la méthode verify qui prend plusieurs paramètres : 
             // - Le premier, c'est le token à décoder
             // - Le deuxième, c'est le secret

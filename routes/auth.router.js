@@ -2,7 +2,6 @@
 const authController = require('../controllers/auth.controller');
 const authRouter = require('express').Router();
 
-const requireAuth = require('../middlewares/auth/auth.middleware.js');
 
 // authRouter.route('/')
 
@@ -13,7 +12,7 @@ authRouter.route('/login')
     .post(authController.login)
 
 authRouter.route('/me')
-    .get(requireAuth, (req, res) => {
+    .get(authRouter, (req, res) => {
         // on appelle directement le middleware, car pas besoin d'argument
         res.json(req.user);  // on renvoit req.user en réponse
     }); 
