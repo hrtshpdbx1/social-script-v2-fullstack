@@ -21,7 +21,8 @@ const jwtUtils = {
 
             const payload = { 
                 id : user._id, /* id est un claims du payload */
-                role : user.role
+                role : user.role,
+                email : user.email
             }
 
             // ? 2) Paramétrer les options pour créer notre token

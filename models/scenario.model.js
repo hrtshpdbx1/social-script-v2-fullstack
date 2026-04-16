@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 // Sous schema, Embed : car les choix n'ont pas de vie en dehors de leur scénario,
 const choiceSchema = new Schema({

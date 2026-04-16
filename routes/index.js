@@ -25,7 +25,9 @@ router.use('/difficulties/:difficultyId/themes', themeRouter)
 // http://localhost:3000/api/difficulties/:difficultyId/themes/:themeId/scenarios
 router.use('/auth', authRouter)
 
-// ! Middleware 404 (Route non trouvée)
+
+// ! 3) Middlewares d'erreur
+// 404 (Route non trouvée)
 // Si la requête est arrivée jusqu'ici, c'est qu'elle n'a matché aucune route au-dessus.
 router.use((req, res, next) => {
     res.status(404).json({
@@ -35,10 +37,9 @@ router.use((req, res, next) => {
     });
 });
 
-// ! Middleware de gestion des erreurs (doit toujours être à la fin !)
+//  Global handle (le reste, toujours à la fin)
 router.use((err, req, res, next) => {
-    // Journalisation pour toi 
-    console.error("🚨 [Error Middleware] :", err.message);
+    console.error("🚨 [Error Middleware] :", err.message); // Journalisation
     // console.error(err.stack); // à decommenter pour détails
 
     // Déterminer le code de statut HTTP

@@ -21,7 +21,6 @@ const userSchema = new Schema(
         password : {
             type : String,
             required : true,
-            // todo: ⚠️ À hacher avec Argon2 avant save
         },
         role : {
             type : String,

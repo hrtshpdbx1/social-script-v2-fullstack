@@ -316,14 +316,14 @@ Côté front, le formulaire de création de scénario aura un bouton "proposer u
 ### Jour 11 — Modèle Report + route de création
 
 **À faire**
-- [ ] Créer `models/report.model.js` : `reportType` (enum), `reason`, `reporterId` (ref User), `status` (enum: 'pending'|'reviewed'|'dismissed', default: 'pending'), `reviewedBy` (ref User, optional), `reviewedAt` (Date, optional), `scenarioId` (ref), `timestamps: true`
-- [ ] Créer `routes/reports.router.js`
-- [ ] Implémenter `POST /scenarios/:scenarioId/report` :
+- [x] Créer `models/report.model.js` : `reportType` (enum), `reason`, `reporterId` (ref User), `status` (enum: 'pending'|'reviewed'|'dismissed', default: 'pending'), `reviewedBy` (ref User, optional), `reviewedAt` (Date, optional), `scenarioId` (ref), `timestamps: true`
+- [x] Créer `routes/reports.router.js`
+- [x] Implémenter `POST /scenarios/:scenarioId/report` :
   - Protégée par `requireAuth`
   - Vérifier que le scénario existe
   - Créer un report avec `reporterId = req.user.userId` et `status = 'pending'`
   - Renvoyer 201
-- [ ] Tester sur Insomnia
+- [x] Tester sur Insomnia
 
 **Questions à te poser**
 - Est-ce qu'un user devrait pouvoir signaler le même scénario plusieurs fois ? Si non, comment tu l'empêches ?

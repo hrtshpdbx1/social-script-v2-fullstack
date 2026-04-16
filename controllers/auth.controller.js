@@ -21,7 +21,7 @@ const authController = {
             const userCreated = await authService.create(userToAdd);
 
             res.location(`/api/user/${userCreated.id}`);
-            // On séléctionne certaine info avant de renvoyer
+            // On sélectionne certaine info avant de renvoyer
             res.status(201).json({
                 id: userCreated._id,
                 firstname: userCreated.firstName,
@@ -53,6 +53,7 @@ const authController = {
                     id: userFound._id,
                     firstName: userFound.firstName,
                     lastName: userFound.lastName,
+                    email: userFound.email,
                     token
                 })
             }
