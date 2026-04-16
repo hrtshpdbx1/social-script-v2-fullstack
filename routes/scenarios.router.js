@@ -2,10 +2,12 @@
 const scenarioRouter = require('express').Router(); //creation
 const scenarioController = require('../controllers/scenario.controller');
 const requireAuth = require('../middlewares/auth/auth.middleware')
+const { scenarioValidator } = require('../validators/scenario.validator');
+const scenarioValidation = require('../middlewares/scenario-validation');
 
 scenarioRouter.route('/')
 .get(scenarioController.getAll)
-.post(requireAuth, scenarioController.insert)
+.post(requireAuth,scenarioValidation(scenarioValidator), scenarioController.insert)
 
 scenarioRouter.route('/:id')
 .get(scenarioController.getById)  

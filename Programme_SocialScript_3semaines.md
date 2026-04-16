@@ -286,20 +286,27 @@ Séparation des préoccupations (separation of concerns).
 - Centraliser la gestion d'erreurs
 
 **À faire**
-- [ ] Installer `zod` (ou `joi`, au choix — je recommande Zod, plus moderne)
-- [ ] Créer un middleware `validate.middleware.js` qui prend un schéma Zod et valide `req.body`
-- [ ] Créer un schéma Zod pour la création d'un scénario (titre obligatoire, context obligatoire, choices : tableau de exactement 3 éléments, etc.)
-- [ ] Appliquer ce middleware sur `POST /scenarios`
-- [ ] Tester les cas d'erreur sur Insomnia : body vide, champs manquants, 2 choices au lieu de 3, etc.
+- [x] Installer yup
+- [x] Créer un middleware `scenario-validation.js` qui prend un schéma Yup et valide `req.body`
+- [x] Créer un schéma Yup pour la création d'un scénario (titre obligatoire, context obligatoire, choices : tableau de exactement 3 éléments, etc.)
+- [x] Appliquer ce middleware sur `POST /scenarios`
+- [x] Tester les cas d'erreur sur Insomnia : body vide, champs manquants, 2 choices au lieu de 3, etc.
 - [ ] Créer un middleware global de gestion d'erreurs (à la fin de ta chaîne de middlewares dans `app.js`) qui catche toutes les erreurs et renvoie un format JSON propre
 - [ ] Revoir toutes tes routes existantes : est-ce que tes erreurs sont gérées correctement ? (try/catch, next(error))
 
 **Questions à te poser**
 - Pourquoi valider côté serveur même si on valide déjà côté front ?
+*Car on n'accède pas seulement aux données via le front, mais aussi pour des interface comme Insomnia, c'est donc une sécurité supplémentaire*
+
 - Quelle différence entre une erreur 400 (Bad Request) et 422 (Unprocessable Entity) ?
+*La 400 (Bad Request) indique une erreur coté client (ex: une syntaxe de requête mal formée)*
+*La 422 (Unprocessable Content) indique que le serveur a compris le type de contenu de la requête et que la syntaxe du contenu était correcte, mais qu'il n'a pas pu traiter les instructions qu'il contenait.*
 
 **Validation** : un POST avec un body invalide renvoie une erreur propre avec un message clair. Fin de semaine 2, gros commit.
 
+**MAJ** Decicision de propose aux utilisateur·ice de soumettre un theme en plus de ceux proposés.
+Côté front, le formulaire de création de scénario aura un bouton "proposer un nouveau thème" qui appelle POST /themes d'abord, récupère le nouvel _id, puis l'utilise dans le formulaire du scénario
+- créer nouvelle route
 ---
 
 ## 🗓️ SEMAINE 3 — Modération, reporting, ressources, polish
