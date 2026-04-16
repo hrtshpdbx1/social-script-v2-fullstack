@@ -20,7 +20,7 @@ const errorUtils = {
     unauthorized: (msg = 'Vous devez être connecté·e') => createError(401, msg),
     forbidden: (msg = 'Accès interdit') => createError(403, msg),
     notFound: (msg = 'Ressource non trouvée') => createError(404, msg),
-    conflict: (msg = 'Conflit de requête avec l\'état actuel de la ressouce cible') => createError(409, msg),
+    conflict: (msg = 'Cette ressource existe déjà') => createError(409, msg),
     internal: (msg = 'Erreur interne du serveur') => createError(500, msg)
 };
 

@@ -338,10 +338,20 @@ Côté front, le formulaire de création de scénario aura un bouton "proposer u
 - [ ] `PATCH /admin/reports/:reportId` : permet à un modérateur de changer le status d'un report (`reviewed` ou `dismissed`). Le serveur doit automatiquement set `reviewedBy = req.user.userId` et `reviewedAt = new Date()`
 - [ ] `GET /admin/scenarios?status=pending` : liste les scénarios en attente de validation. Protégée par rôle.
 - [ ] `PATCH /admin/scenarios/:scenarioId/status` : permet à un modérateur de passer un scénario à `approved` ou `rejected`. Same deal avec `reviewedBy` / `reviewedAt`.
+- [ ] Ajouter `status` (enum: 'pending'|'approved'|'rejected', default: 'pending') au model `Theme`
+- [ ] Implémenter `POST /themes` :
+  - Protégée par `requireAuth`
+  - Créer le theme avec `status: 'pending'` forcé côté serveur
+  - Renvoyer 201 avec le `_id` du theme créé (le front en a besoin pour le formulaire scénario)
+  - Validator Yup : `title` obligatoire, `description` optionnel, `icon` obligatoire
+- [ ] `GET /admin/themes?status=pending` : liste les thèmes en attente. Protégée modérateur/admin.
+- [ ] `PATCH /admin/themes/:themeId/status` : approuver ou rejeter un thème proposé.
 
 **Questions à te poser**
 - Pourquoi les routes de modération commencent par `/admin/` ? Est-ce une bonne pratique ou pas ?
 - Un modérateur peut-il faire TOUT ce qu'un admin peut faire ? Si non, où est-ce que tu mettras la différence concrètement ?
+- Un thème en `pending` peut-il être utilisé dans un scénario ? 
+  Si oui, que se passe-t-il si le thème est ensuite rejeté ?
 
 **Validation** : test complet du workflow : user crée scénario (pending) → modérateur le voit dans la liste pending → modérateur l'approuve → le scénario apparaît maintenant dans `GET /themes/:id/scenarios`.
 
