@@ -6,6 +6,7 @@
 
 
 const jwtUtils = require('../../utils/jwt.utils');
+const errorUtils = require('../../utils/error.utils');
 
 const requireAuth = async (req, res, next) => {
     //Récupérer le token depuis le header authorization`
@@ -13,7 +14,7 @@ const requireAuth = async (req, res, next) => {
     // console.log(authorization)
     // si pas de token pas ajouté : undefined et fin de la requête 
     if (!authorization) {
-        res.status(401).json({ statusCode: 401, message: 'Vous devez être connecté' });
+      return next(errorUtils.unauthorized());
     }
 
     // Si quelqu'un a envoyé un "Bearer" non suivi d'un token
@@ -21,7 +22,7 @@ const requireAuth = async (req, res, next) => {
     //découpe ici la chaine de caractère après l'espace et renvoit deux tableaux, dans le premier [0] "Bearer" dans le second le token [1]
     const token = authorization.split(' ')[1];
     if (!token) {
-        res.status(401).json({ statusCode: 401, message: 'Vous devez être connecté' });
+       return next(errorUtils.unauthorized());
     }
 
     // ? S'il y'a un token :
@@ -35,10 +36,10 @@ const requireAuth = async (req, res, next) => {
 
         // on continue la requête
         next();
-        
+
     } catch (err) {
-        // ? Si le décodage a planté
-        res.status(401).json({ statusCode: 401, message: 'Vous devez être connecté' });
+       // Si le token est expiré ou invalide, on renvoie une 401
+        next(errorUtils.unauthorized('Session expirée ou token invalide'));
     }
 }
 

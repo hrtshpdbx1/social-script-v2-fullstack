@@ -4,13 +4,15 @@ const themeService = require('../services/theme.service')
 const themeController = {
 
     /**
-* Récupérer tous les hhèmes
+* Récupérer tous les Thèmes
 * @param { Request } req
 * @param { Response } res
+* @param { NextFunction } next
 */
 
-    getAllThemes: async (req, res) => {
-// todo : vérifier utilité de cette fonctions
+    // todo : vérifier utilité de cette fonctions
+    getAllThemes: async (req, res, next) => {
+
         try {
             const allThemes = await themeService.find()
             const dataToSend = {
@@ -19,13 +21,12 @@ const themeController = {
             // Si tout s'est bien passé, renvoie 200 et data
             res.status(200).json(dataToSend);
         } catch (err) {
-
-            res.status(500).json({ statusCode: 500, message: 'Erreur lors de la récupération des thèmes dans la DB' });
+            next(err); // Error Middleware de index.js 
         }
 
     },
 
-    getThemeByDifficulty: async (req, res) => {
+    getThemeByDifficulty: async (req, res, next) => {
         try {
             const { difficultyId } = req.params;
             // On récupère le difficultyId depuis l'URL
@@ -38,7 +39,7 @@ const themeController = {
             res.status(200).json(dataToSend);
             // on renvoit un tableau (vide ou plein)
         } catch (err) {
-            res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération du thème' })
+            next(err);
         }
 
     }

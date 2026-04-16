@@ -3,20 +3,19 @@
 const difficultyService = require('../services/difficulty.service')
 
 const difficultyController = {
-getAllDifficulties: async (req, res) => {
+    getAllDifficulties: async (req, res, next) => {
 
         try {
             const allDifficulties = await difficultyService.find()
             const dataToSend = {
-                difficulties : allDifficulties
+                difficulties: allDifficulties
             };
             // Si tout s'est bien passé, renvoie 200et data
             res.status(200).json(dataToSend);
-            } catch (err) {
-
-            res.status(500).json({ statusCode: 500, message: 'Erreur lors de la récupération des niveaux de difficultés dans la DB' });
+        } catch (err) {
+            next(err);// --> passe au  Middleware de index.js 
         }
-         
+
     }
 
 }

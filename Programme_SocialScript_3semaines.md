@@ -291,8 +291,8 @@ Séparation des préoccupations (separation of concerns).
 - [x] Créer un schéma Yup pour la création d'un scénario (titre obligatoire, context obligatoire, choices : tableau de exactement 3 éléments, etc.)
 - [x] Appliquer ce middleware sur `POST /scenarios`
 - [x] Tester les cas d'erreur sur Insomnia : body vide, champs manquants, 2 choices au lieu de 3, etc.
-- [ ] Créer un middleware global de gestion d'erreurs (à la fin de ta chaîne de middlewares dans `app.js`) qui catche toutes les erreurs et renvoie un format JSON propre
-- [ ] Revoir toutes tes routes existantes : est-ce que tes erreurs sont gérées correctement ? (try/catch, next(error))
+- [x] Créer un middleware global de gestion d'erreurs (à la fin de ta chaîne de middlewares dans `app.js`) qui catche toutes les erreurs et renvoie un format JSON propre
+- [x] Revoir toutes tes routes existantes : est-ce que tes erreurs sont gérées correctement ? (try/catch, next(error))
 
 **Questions à te poser**
 - Pourquoi valider côté serveur même si on valide déjà côté front ?

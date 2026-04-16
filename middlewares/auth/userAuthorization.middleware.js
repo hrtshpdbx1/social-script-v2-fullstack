@@ -6,6 +6,7 @@
 //todo : le brancher
 
 const User = require('../../models/user.model');
+const { notFound, forbidden, internal } = require('../../utils/error.utils');
 
 const userAuthorization = () => {
 
@@ -25,31 +26,22 @@ const userAuthorization = () => {
             const tokenUser = await User.findById(userId)
             // si on a pas récupé d'utilisateur, c'est que la personne qui a fait la requête a été supprimée de la DB entre temps
             if (!tokenUser) {
-                return res.status(404).json({
-                    statusCode: 404,
-                    message: 'Utilisateur·ice introuvable dans la DB'
-                });
+                 return next(notFound())
             }
             // Vérification Admin OU Propriétaire du compte
             const isAdmin = tokenUser.role === 'admin';
             const isOwner = userId.toString() === userRouterId.toString();
 
             if (isAdmin || isOwner) {
-                
+                return next()
             }
             // Si on arrive ici, c'est que ni l'un ni l'autre n'est vrai
-            return res.status(403).json({
-                statusCode: 403,
-                message: 'Vous n\'avez pas les droits d\'accès à ces données'
-            });
+           return next(forbidden())
             // sinon, pas admin ni la bonne personne 
         }
         catch (err) {
             console.error(err);
-            return res.status(500).json({
-                statusCode: 500,
-                message: 'Une erreur est survenue dans la DB'
-            });
+            return next(internal())
         }
     }
 }

@@ -1,13 +1,12 @@
 // auth.controller.js
-
 const authService = require("../services/auth.service");
 const jwtUtils = require("../utils/jwt.utils");
+const errorUtils = require('../utils/error.utils');
 
 // 
 const authController = {
 
-
-    register: async (req, res) => {
+    register: async (req, res, next) => {
 
         try {
             // On récupére le body de la requète qui contient les infos de l'utilisateur·ice
@@ -15,10 +14,7 @@ const authController = {
 
             // On vérifie si l'email n'est pas déjà utilisé
             if (await authService.emailAlreadyExist(userToAdd.email)) {
-                return res.status(409).json({
-                    statusCode: 409,
-                    message: 'Cet e-mail est déjà utilisé'
-                })
+                return next(errorUtils.create(409, 'Cet e-mail est déjà utilisé'));
             };
 
             //On tente d'ajouter l'utilisateur·ice
@@ -33,13 +29,12 @@ const authController = {
             });
         }
         catch (err) {
-            console.log(err);
-            res.sendStatus(500)
+            next(err);// -> Error Middleware de index.js 
         }
     },
 
 
-    login: async (req, res) => {
+    login: async (req, res, next) => {
         try {
             //récupération des infos de connexion envoyée dans le body
             const credentials = req.body;
@@ -48,7 +43,7 @@ const authController = {
 
             // si pas de user trouvée, les infos de connextions ne sont pas bonnes
             if (!userFound) {
-                return res.status(401).json({ statusCode: 401, message: 'Les informations de connexion ne sont pas bonnes' });
+                return next(errorUtils.create(401, 'Les informations de connexion ne sont pas bonnes'));
             } else {
                 // on génère un token
                 const token = await jwtUtils.generate(userFound);
@@ -62,10 +57,8 @@ const authController = {
                 })
             }
 
-
         } catch (err) {
-            console.log(err);
-            res.sendStatus(500)
+            next(err);
         }
     },
 

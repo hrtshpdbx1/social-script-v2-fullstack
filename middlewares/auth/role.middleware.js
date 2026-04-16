@@ -1,6 +1,7 @@
 // role.middleware.js
 // vérifie si l'utilisateur·ice possède le bon rôle pour faire ce qu'il demande 
 
+const { forbidden } = require("../../utils/error.utils");
 
 //todo : le brancher
 // Créer une fonction `requireRole(...allowedRoles)` qui :
@@ -16,10 +17,7 @@ const roleAuthorization = () => {
 
             // Vérifie que `req.user.role` est dans`allowedRoles`
             if (!allowedRoles.includes(req.user.role)) {
-                return res.status(403).json({
-                    statusCode: 403,
-                    message: 'Vous n\'avez pas les droits d\'accès'
-                });
+                return next(forbidden())
             }
             return next();
         }

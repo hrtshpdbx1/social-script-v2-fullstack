@@ -1,9 +1,9 @@
 // scenario.controller.js
 // Chaque fonction représente une action qu'on peut faire sur la ressource.
 
-// ? Import Service 
+// ? Import 
 const scenarioService = require('../services/scenario.service');
-
+const errorUtils = require('../utils/error.utils');
 const scenarioController = {
 
     /**
@@ -12,8 +12,7 @@ const scenarioController = {
     * @param { Response } res
     */
 
-    getAll: async (req, res) => {
-
+    getAll: async (req, res, next) => {
         try {
             //  On extrait uniquement les paramètres autorisés depuis req.query
             const { difficultyId, themeId } = req.query;
@@ -41,11 +40,8 @@ const scenarioController = {
             res.status(200).json(dataToSend);
 
         } catch (err) {
-            console.error(err);
-            res.status(500).json({
-                statusCode: 500,
-                message: 'Erreur lors de la récupération des scenarios dans la DB'
-            });
+            console.error(err.stack); // log de l'erreur
+            next(err)
         }
     },
 
@@ -56,22 +52,22 @@ const scenarioController = {
         * @param { Response } res
         */
 
-    getById: async (req, res) => {
+    getById: async (req, res, next) => {
 
         try {
             const scenarioId = req.params.id
             const scenario = await scenarioService.findById(scenarioId)
             const dataToSend = { scenario }
             if (!scenario) {
-                res.status(404).json({ message: "L'Id ne correspond à aucun scenario" })
+                return next(errorUtils.create(404, 'L\'id ne correspond à aucun scenario'))
             } else { res.status(200).json(dataToSend) }
 
         } catch (err) {
-            res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération des scenarios' })
+            console.error(err.stack);
+            next(err)
         }
 
     },
-
 
     /**
         * getByThemeId
@@ -81,10 +77,8 @@ const scenarioController = {
         * @param { Response } res
         */
 
-
-
     //  Version légère, "liste" --> on renvoit Title et context seulement
-    getByThemeId: async (req, res) => {
+    getByThemeId: async (req, res, next) => {
         try {
             const themeId = req.params.themeId // On récupère le themeId depuis l'URL
             const scenarios = await scenarioService.find(
@@ -98,18 +92,19 @@ const scenarioController = {
             const dataToSend = { scenarios }
             res.status(200).json(dataToSend);
         } catch (err) {
-            res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération des scenarios' })
+            next(err)
         }
     },
 
-    getByUser: async (req, res) => {
+    getByUser: async (req, res, next) => {
         try {
             const userId = req.params.id
             const scenarios = await scenarioService.find({ authorId: userId });
             const dataToSend = { scenarios }
             res.status(200).json(dataToSend);
         } catch (err) {
-            res.status(500).json({ statusCode: 500, message: 'Une erreur est survenue lors de la récupération des scenarios' })
+            console.error(err.stack);
+            next(err)
         }
     },
 
@@ -119,20 +114,19 @@ const scenarioController = {
     * @param { Response } res
     */
 
-    insert: (req, res) => {
+    insert: (req, res, next) => {
         try {
             const addedScenario = req.body;
             const authorId = req.user.id;
             // Pour respecter les principes REST, on doit rajouter à la réponse, une url qui permet de consulter la valeur ajoutée
             res.location(`/api/scenario/${addedScenario.id}`);
-            res.status(201).json({ 
-                message: `Scénario de ${authorId} reçu`, 
-                data: addedScenario});
+            res.status(201).json({
+                message: `Scénario de ${authorId} reçu`,
+                data: addedScenario
+            });
         } catch (err) {
-            res.status(500).json({ statusCode: 500, message: 'Erreur lors de l\'ajout dans la DB' })
+            next(err);
         }
-
-
     },
 
     update: (req, res) => {
