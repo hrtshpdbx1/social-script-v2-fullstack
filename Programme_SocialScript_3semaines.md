@@ -331,7 +331,8 @@ Côté front, le formulaire de création de scénario aura un bouton "proposer u
 ### Jour 12 — Routes de modération (modérateurs et admins)
 
 **À faire**
-- [ ] `GET /admin/reports` : liste tous les reports, filtrable par status. Protégée par `requireAuth` + `requireRole('moderator', 'admin')`
+- [ ] Un seul admin/router avec 6 routes (Reports : 2 routes, Scenarios : 2 routes, Themes : 2 routes)
+- [x] `GET /admin/reports` : liste tous les reports, filtrable par status. Protégée par `requireAuth` + `requireRole('moderator', 'admin')`
 - [ ] `PATCH /admin/reports/:reportId` : permet à un modérateur de changer le status d'un report (`reviewed` ou `dismissed`). Le serveur doit automatiquement set `reviewedBy = req.user.userId` et `reviewedAt = new Date()`
 - [ ] `GET /admin/scenarios?status=pending` : liste les scénarios en attente de validation. Protégée par rôle.
 - [ ] `PATCH /admin/scenarios/:scenarioId/status` : permet à un modérateur de passer un scénario à `approved` ou `rejected`. Same deal avec `reviewedBy` / `reviewedAt`.
@@ -346,9 +347,16 @@ Côté front, le formulaire de création de scénario aura un bouton "proposer u
 
 **Questions à te poser**
 - Pourquoi les routes de modération commencent par `/admin/` ? Est-ce une bonne pratique ou pas ?
+Pour créer un espace spécial pour les admins, qui ne sera pas accesssibles aux autres utisiteurs (grace a nos Middleware requireRole('moderator', 'admin')`)
 - Un modérateur peut-il faire TOUT ce qu'un admin peut faire ? Si non, où est-ce que tu mettras la différence concrètement ?
+*Modérateur : valider/rejeter scénarios, thèmes, voir les reports*
+*Admin : tout ce que fait le modérateur + supprimer définitivement un contenu, gérer les utilisateurs, changer les rôles*
+ *Sur certaines routes le requireRole('moderator', 'admin') et sur d'autres uniquement requireRole('admin').*
+
 - Un thème en `pending` peut-il être utilisé dans un scénario ? 
   Si oui, que se passe-t-il si le thème est ensuite rejeté ?
+*Le thème passe à rejected, et les scénarios liés restent tels quels avec leur themeId qui pointe vers un thème rejeté. C'est le front qui gère de ne pas les afficher. Ces scénarios sont toujours pending en DB. Un admin pourrait plus tard les réaffecter vers le thème "travail" qui existe déjà*
+*TODO :  feature :un modo/admin pourraient réafecter un scneation sur un autre theme en cas de doublon*
 
 **Validation** : test complet du workflow : user crée scénario (pending) → modérateur le voit dans la liste pending → modérateur l'approuve → le scénario apparaît maintenant dans `GET /themes/:id/scenarios`.
 

@@ -10,6 +10,7 @@ const scenarioController = {
     * Récupérer tous les scenarios
     * @param { Request } req
     * @param { Response } res
+    *  @param { Function } next
     */
 
     getAll: async (req, res, next) => {
@@ -17,7 +18,7 @@ const scenarioController = {
             //  On extrait uniquement les paramètres autorisés depuis req.query
             const { difficultyId, themeId } = req.query;
 
-            // 2. On construit un objet de filtre dynamique
+            // Création d'un objet de filtre dynamique
             const filter = {};
 
             //  n'ajoute les clés que si elles existent
@@ -50,6 +51,7 @@ const scenarioController = {
         * sera utilisé par les admins/modérateurs pour consulter les scénarios et les valider, les rejeter, les modifier.*
         * @param { Request } req
         * @param { Response } res
+        * @param { Function } next
         */
 
     getById: async (req, res, next) => {
@@ -75,6 +77,7 @@ const scenarioController = {
         * Permet aux les utilisateur·ices de récupérer tous les scenarios (approuvés) en fonction de leur themeID
         * @param { Request } req
         * @param { Response } res
+        *  @param { Function } next
         */
 
     //  Version légère, "liste" --> on renvoit Title et context seulement
@@ -112,6 +115,7 @@ const scenarioController = {
     * Ajouter un scénario
     * @param { Request } req
     * @param { Response } res
+    *  @param { Function } next
     */
 
     insert: (req, res, next) => {

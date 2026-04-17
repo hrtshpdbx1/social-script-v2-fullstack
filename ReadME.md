@@ -1,5 +1,12 @@
 # 🤝 SocialScript v2
 
+[![Node](https://img.shields.io/badge/Node.js-v18+-green?style=flat-square&logo=node.js)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.x-grey?style=flat-square&logo=express)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-brightgreen?style=flat-square&logo=mongodb)](https://www.mongodb.com/atlas)
+[![JWT](https://img.shields.io/badge/Auth-JWT-pink?style=flat-square&logo=jsonwebtokens)](https://jwt.io/)
+[![Status](https://img.shields.io/badge/Status-In%20progress-orange?style=flat-square)](#-roadmap)
+
+
 **A fullstack app to practice social interactions, without pressure and without judgment.**
 
 SocialScript was built around a simple observation: social codes that seem obvious to many people can be a real challenge for neurodivergent individuals (autism, ADHD) or anyone who wants to build assertiveness skills. The idea is to offer a safe and supportive space to practice everyday interactions through scenarios, with immediate educational feedback on each choice made.

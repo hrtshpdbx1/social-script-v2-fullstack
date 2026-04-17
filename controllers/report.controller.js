@@ -11,6 +11,7 @@ const reportController = {
     * Créer un report (demande de révision?)
     * @param { Request } req
     * @param { Response } res
+    *  @param { Function } next
     */
 
     insert: async (req, res, next) => {

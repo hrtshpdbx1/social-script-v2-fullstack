@@ -3,6 +3,7 @@
 // Role : définition de toutes les routes de notre API (verb + url statique + params)
 
 // import scenarios.router
+const adminRouter = require('./admin.router');
 const authRouter = require('./auth.router');
 const difficultyRouter = require('./difficulties.router');
 const scenarioRouter = require('./scenarios.router');
@@ -24,6 +25,7 @@ router.use('/difficulties/:difficultyId/themes', themeRouter)
 // ex d'URL pour accéder aux scénarios d'un thème
 // http://localhost:3000/api/difficulties/:difficultyId/themes/:themeId/scenarios
 router.use('/auth', authRouter)
+router.use('/admin', adminRouter)
 
 
 // ! 3) Middlewares d'erreur

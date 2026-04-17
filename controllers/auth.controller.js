@@ -6,6 +6,13 @@ const errorUtils = require('../utils/error.utils');
 // 
 const authController = {
 
+/**
+ *Création de compte
+ * @param { Request } req
+ * @param { Response } res
+ * @param { Function } next
+ */
+
     register: async (req, res, next) => {
 
         try {
@@ -32,6 +39,13 @@ const authController = {
             next(err);// -> Error Middleware de index.js 
         }
     },
+
+/**
+ * Connexion 
+ * @param { Request } req
+ * @param { Response } res
+ * @param { Function } next
+ */
 
 
     login: async (req, res, next) => {
