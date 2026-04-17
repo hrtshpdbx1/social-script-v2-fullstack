@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, Types, model } = require('mongoose');
 
 // Sous schema, Embed : car les choix n'ont pas de vie en dehors de leur scénario,
 const choiceSchema = new Schema({
@@ -76,11 +76,26 @@ const scenarioSchema = new Schema(
             ref: 'Difficulty',
             required: true,
         },
-        
+
         themeId: {
             type: Schema.Types.ObjectId,
             ref: 'Theme',
             required: true,
+        },
+        status: {
+            type: String,
+            enum: ['pending', 'approved', 'rejected'],
+            default: 'pending'
+        },
+
+        reviewedBy: {
+            type: Types.ObjectId,
+            ref: 'User', 
+            default: null
+        },
+        reviewedAt: {
+            type: Date,
+            default: null
         }
     },
     {

@@ -3,17 +3,19 @@
 
 const { forbidden } = require("../../utils/error.utils");
 
-//todo : le brancher
 // Créer une fonction `requireRole(...allowedRoles)` qui :
 // - Vérifie que `req.user.role` est dans`allowedRoles`(c'est donc une "higher-order function", elle prend des args et renvoie un middleware)
 // Sinon → 403
 
-const roleAuthorization = () => {
-
     const requireRole = (...allowedRoles) => {
         // les allowedRoles ne sont pas définis dans le middleware, ms au moment où on  appelle depuis la route. 
         // ex :.delete( roleAuthorization()('admin') , scenarioController.delete)
-        return async (req, res, next) => {
+        return (req, res, next) => {
+
+            // vérifie que l'utilisateur·ice est connecté·e
+            if (!req.user || !req.user.role) {
+                return next(forbidden());
+            }
 
             // Vérifie que `req.user.role` est dans`allowedRoles`
             if (!allowedRoles.includes(req.user.role)) {
@@ -22,8 +24,6 @@ const roleAuthorization = () => {
             return next();
         }
     }
-    return requireRole
-    // roleAuthorization() retourne la fonction requireRole
-}
 
-module.exports = roleAuthorization; 
+
+module.exports = requireRole; 

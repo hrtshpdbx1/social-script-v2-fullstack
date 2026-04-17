@@ -118,14 +118,24 @@ const scenarioController = {
     *  @param { Function } next
     */
 
-    insert: (req, res, next) => {
+    insert: async (req, res, next) => {
         try {
-            const addedScenario = req.body;
+            const scenarioData = req.body;
             const authorId = req.user.id;
+
+            // On fusionne les données du body avec l'ID de l'auteur
+            const scenarioToCreate = {
+                ...scenarioData,
+                authorId: authorId
+            };
+
+            // On appelle le service pour sauvegarder dans MongoDB 
+            const addedScenario = await scenarioService.create(scenarioToCreate);
+
             // Pour respecter les principes REST, on doit rajouter à la réponse, une url qui permet de consulter la valeur ajoutée
-            res.location(`/api/scenario/${addedScenario.id}`);
+            res.location(`/api/scenario/${scenarioData.id}`);
             res.status(201).json({
-                message: `Scénario de ${authorId} reçu`,
+                message: `Scénario de ${authorId} bien sauvegardé en base de données`,
                 data: addedScenario
             });
         } catch (err) {

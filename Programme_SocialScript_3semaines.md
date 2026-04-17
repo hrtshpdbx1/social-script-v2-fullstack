@@ -331,19 +331,19 @@ Côté front, le formulaire de création de scénario aura un bouton "proposer u
 ### Jour 12 — Routes de modération (modérateurs et admins)
 
 **À faire**
-- [ ] Un seul admin/router avec 6 routes (Reports : 2 routes, Scenarios : 2 routes, Themes : 2 routes)
+- [x] Un seul admin/router avec 6 routes (Reports : 2 routes, Scenarios : 2 routes, Themes : 2 routes)
 - [x] `GET /admin/reports` : liste tous les reports, filtrable par status. Protégée par `requireAuth` + `requireRole('moderator', 'admin')`
-- [ ] `PATCH /admin/reports/:reportId` : permet à un modérateur de changer le status d'un report (`reviewed` ou `dismissed`). Le serveur doit automatiquement set `reviewedBy = req.user.userId` et `reviewedAt = new Date()`
-- [ ] `GET /admin/scenarios?status=pending` : liste les scénarios en attente de validation. Protégée par rôle.
-- [ ] `PATCH /admin/scenarios/:scenarioId/status` : permet à un modérateur de passer un scénario à `approved` ou `rejected`. Same deal avec `reviewedBy` / `reviewedAt`.
-- [ ] Ajouter `status` (enum: 'pending'|'approved'|'rejected', default: 'pending') au model `Theme`
+- [x] `PATCH /admin/reports/:reportId` : permet à un modérateur de changer le status d'un report (`reviewed` ou `dismissed`). Le serveur doit automatiquement set `reviewedBy = req.user.userId` et `reviewedAt = new Date()`
+- [x] `GET /admin/scenarios?status=pending` : liste les scénarios en attente de validation. Protégée par rôle.
+- [x] `PATCH /admin/scenarios/:scenarioId/status` : permet à un modérateur de passer un scénario à `approved` ou `rejected`. Same deal avec `reviewedBy` / `reviewedAt`.
+- [x] Ajouter `status` (enum: 'pending'|'approved'|'rejected', default: 'pending') au model `Theme`
 - [ ] Implémenter `POST /themes` :
   - Protégée par `requireAuth`
   - Créer le theme avec `status: 'pending'` forcé côté serveur
   - Renvoyer 201 avec le `_id` du theme créé (le front en a besoin pour le formulaire scénario)
   - Validator Yup : `title` obligatoire, `description` optionnel, `icon` obligatoire
-- [ ] `GET /admin/themes?status=pending` : liste les thèmes en attente. Protégée modérateur/admin.
-- [ ] `PATCH /admin/themes/:themeId/status` : approuver ou rejeter un thème proposé.
+- [x] `GET /admin/themes?status=pending` : liste les thèmes en attente. Protégée modérateur/admin.
+- [x] `PATCH /admin/themes/:themeId/status` : approuver ou rejeter un thème proposé.
 
 **Questions à te poser**
 - Pourquoi les routes de modération commencent par `/admin/` ? Est-ce une bonne pratique ou pas ?

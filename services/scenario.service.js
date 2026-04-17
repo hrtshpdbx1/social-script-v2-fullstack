@@ -36,9 +36,9 @@ const scenarioService = {
 
     create: async (scenario) => {
         try {
-            const scenarioToAdd = new Scenario({...scenario,'status': 'pending'});
+            const scenarioToAdd = new Scenario({ ...scenario, 'status': 'pending' });
             // Créer un nouvel objet à partir du model, en forçant status: pending
-   
+
             // Sauvegarde cet objet en DB 
             await scenarioToAdd.save();
             // Renvoyer l'objet créé
@@ -51,7 +51,25 @@ const scenarioService = {
         }
     },
 
-   
+    update: async (scenarioId, newScenarioStatus, adminId) => {
+        try {
+            const statusToUpdate = await Scenario.findByIdAndUpdate(scenarioId,
+                {
+                    ...newScenarioStatus,
+                    reviewedBy: adminId,
+                    reviewedAt: new Date()
+                },
+                { returnDocument: 'after' }
+            );
+            return statusToUpdate
+        }
+        catch (err) {
+            console.log(err);
+            throw new Error(err);
+        }
+
+    }
+
 
 }
 

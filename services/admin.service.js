@@ -31,14 +31,16 @@ const adminService = {
         // On reçoit l'ID du report, les nouvelles infos, et l'ID de l'admin 
         try {
             const updatedReport = await Report.findByIdAndUpdate(
-                reportId, // 1er paramètre : l'ID de ce qu'on veut modifier
-                // Ajout nouvelles valeurs
+                // Model.findByIdAndUpdate prends 3 params
+                // id, modifications, options
+                reportId, // 1er  : l'ID de ce qu'on veut modifier
+                // 2E : Ajout nouvelles valeurs
                 {
                     ...newInfos,
                     reviewedBy: adminId,
                     reviewedAt: new Date()
                 },
-                { new: true }       //  pour renvoyer le document MODIFIÉ,(renvoie l'ancien par défaut)
+               { returnDocument: 'after' }     //  pour renvoyer le document MODIFIÉ,(renvoie l'ancien par défaut)
             );
             return updatedReport
         }

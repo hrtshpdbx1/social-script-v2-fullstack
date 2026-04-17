@@ -42,6 +42,20 @@ const themeController = {
             next(err);
         }
 
+    }, 
+
+    insert: async (req, res, next) => {
+        try {
+            const themeToAdd = req.body;
+            const newTheme = await themeService.create(themeToAdd);
+            
+            res.status(201).json({
+                message: "Nouveau thème proposé avec succès. En attente de validation.",
+                data: newTheme
+            });
+        } catch (err) {
+            next(err);
+        }
     }
 
 

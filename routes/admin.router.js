@@ -1,5 +1,6 @@
 const adminController = require('../controllers/admin.controller');
 const scenarioController = require('../controllers/scenario.controller');
+const themeController = require('../controllers/theme.controller');
 const requireAuth = require('../middlewares/auth/auth.middleware');
 const requireRole = require('../middlewares/auth/role.middleware');
 
@@ -12,17 +13,23 @@ adminRouter.use(requireAuth, requireRole('moderator', 'admin'));
 
 adminRouter.route('/report')
     .get(adminController.getAllReports)
+
+  adminRouter.route('/report/:reportId')  
     .patch(adminController.updateReportStatus)
 
-adminRouter.route('/scenarios/:scenarioId/status')
-// [] GET : getAllScenariosPending 
-// [] PATCH : updateScenarioStatusThemes 
+adminRouter.route('/scenarios')
+.get(adminController.getAllScenariosPending)
 
-// patch(adminCondroller.update)
-// permet à un modérateur de passer un scénario à `approved` ou `rejected`. Same deal avec `reviewedBy` / `reviewedAt`.
+
+adminRouter.route('/scenarios/:scenarioId/status')
+.patch(adminController.updateScenarioStatus)
+
 
 adminRouter.route('/themes')
-// [] GET : getAllThemesPending 
-// [] PATCH : updateThemeStatus
+.get(adminController.getAllThemesPending)
+
+adminRouter.route('/themes/:themeId/status')
+.patch(adminController.updateThemeStatus)
+
 
 module.exports = adminRouter;
