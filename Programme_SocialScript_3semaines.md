@@ -325,9 +325,6 @@ Côté front, le formulaire de création de scénario aura un bouton "proposer u
   - Renvoyer 201
 - [x] Tester sur Insomnia
 
-**Questions à te poser**
-- Est-ce qu'un user devrait pouvoir signaler le même scénario plusieurs fois ? Si non, comment tu l'empêches ?
-- Pourquoi on met le `status` à `pending` et pas directement à `reviewed` ?
 
 ---
 
