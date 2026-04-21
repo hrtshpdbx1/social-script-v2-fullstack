@@ -24,12 +24,21 @@ adminRouter.route('/scenarios')
 adminRouter.route('/scenarios/:scenarioId/status')
 .patch(adminController.updateScenarioStatus)
 
+adminRouter.route('/scenarios/:scenarioId')
+.delete(requireRole('admin'), adminController.deleteScenario)
 
 adminRouter.route('/themes')
 .get(adminController.getAllThemesPending)
 
 adminRouter.route('/themes/:themeId/status')
 .patch(adminController.updateThemeStatus)
+
+adminRouter.route('/users')
+.get(requireRole('admin'), adminController.getAllUsers)
+
+adminRouter.route('/users/:userId/role')
+.patch(requireRole('admin'), adminController.updateRole)
+
 
 
 module.exports = adminRouter;

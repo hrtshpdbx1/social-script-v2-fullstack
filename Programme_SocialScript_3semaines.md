@@ -372,7 +372,9 @@ Pour créer un espace spécial pour les admins, qui ne sera pas accesssibles aux
 
 **Questions à te poser**
 - Comment protéger contre le cas où il ne resterait plus aucun admin dans la base ?
+*C'est protégé par la vérification d'auto-supression*
 - Faut-il vraiment supprimer (`DELETE`) ou plutôt "soft delete" (un champ `deletedAt`) ? Quels sont les pour et contre ?
+*Un soft-deleted permettrait une traçabilité ("qui a supprimé quoi, quand ?"), de restaurer un contenu supprimé par erreur et d'avoir des stats/historiques qui restent cohérents*
 
 ---
 

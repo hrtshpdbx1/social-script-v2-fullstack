@@ -2,7 +2,9 @@
 const adminService = require("../services/admin.service");
 const scenarioService = require("../services/scenario.service");
 const themeService = require("../services/theme.service");
+const userService = require("../services/user.service");
 const errorUtils = require("../utils/error.utils");
+
 
 const adminController = {
 
@@ -41,6 +43,7 @@ const adminController = {
             next(err);
         }
     },
+
 
     /**
      * Modifie les infos d'un repport
@@ -122,7 +125,7 @@ const adminController = {
             next(err);
         }
 
-    }, 
+    },
     /**
      * Liste les thèmes en attente de validation. 
      */
@@ -130,7 +133,7 @@ const adminController = {
         try {
             const filter = { status: 'pending' };
             const themesPending = await themeService.find(filter); // Réutilise la méthode find existante !
-            
+
             res.status(200).json({ themes: themesPending });
         } catch (err) {
             next(err);
@@ -157,8 +160,82 @@ const adminController = {
         } catch (err) {
             next(err);
         }
-    }
+    },
 
+    /**
+* Liste tous les user 
+* @param { Request } req
+* @param { Response } res
+* @param { Function } next
+*/
+
+    getAllUsers: async (req, res, next) => {
+        try {
+            const allUsers = await adminService.find();
+            // On prépare notre objet JSON de réponse
+            const dataToSend = {
+                users: allUsers
+            };
+            res.status(200).json(dataToSend);
+        }
+        catch (err) {
+            console.error(err.stack);
+            next(err);
+        }
+    },
+
+    /**
+* Promouvoir un user au rôle de modérateur (ou de rétrograder)
+* @param { Request } req
+* @param { Response } res
+* @param { Function } next
+*/
+    updateRole: async(req, res, next) => {
+        try {
+            const userId = req.params.userId;
+            const newInfos = req.body;
+            const adminId = req.user.id;
+            const user = await userService.findById(userId);
+
+            if (!user) { return next(errorUtils.create(404,
+                'Cet utilisateur·ice n\'existe pas')); }
+
+            if (userId === adminId) {
+                return next(errorUtils.create(403,
+                    'Action impossible : vous ne pouvez pas vous rétrograder'));
+            }
+
+            if (user.role === 'admin') {
+                return next(errorUtils.create(403,
+                    'Action impossible : vous ne pouvez pas changer le status d\'un autre admin'));
+            }
+            const updatedRole = await userService.update(userId, newInfos, adminId);
+            res.status(200).json(updatedRole);
+        }
+        catch (err) {
+            next(err);
+        }
+    },
+
+
+    /**
+  * Supression d'un scenario
+  * @param { Request } req
+  * @param { Response } res
+  */
+    deleteScenario: async (req, res, next) => {
+        try {
+            const id = req.params.scenarioId;
+            if (await scenarioService.delete(id)) {
+                return res.sendStatus(204);
+            } else {
+                return next(errorUtils.create(404,
+                    'Le scenario que vous essayer de supprimer n\'existe pas'));
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
 
 }
 

@@ -90,10 +90,14 @@ const scenarioSchema = new Schema(
 
         reviewedBy: {
             type: Types.ObjectId,
-            ref: 'User', 
+            ref: 'User',
             default: null
         },
         reviewedAt: {
+            type: Date,
+            default: null
+        },
+        deletedAt: {
             type: Date,
             default: null
         }
