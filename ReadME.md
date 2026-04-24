@@ -222,7 +222,7 @@ cp .env.example .env
 # CORS_ORIGIN=http://localhost:5173
 
 # 4. Start the server (native hot-reload)
-node --watch app.js
+npm run dev
 ```
 
 The server runs at `http://localhost:3000`.
