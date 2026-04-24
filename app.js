@@ -40,6 +40,10 @@ startServer();
 
 // * dot.env --> Librarie pas aussi moderne que la fonctionnalité native de Node
 
-// Plus tard
-// ajouter app level middleware / du middleware CORS
-// --> cf. demo ligne 18
+const cors = require('cors');
+
+server.use(cors({
+    origin: process.env.CORS_ORIGIN,
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));

@@ -39,7 +39,6 @@ const adminController = {
             res.status(200).json(dataToSend);
 
         } catch (err) {
-            console.error(err.stack);
             next(err);
         }
     },
@@ -64,7 +63,7 @@ const adminController = {
 
             //vérifier si le report existe
             if (!report) {
-                return next(errorUtils.create(404, 'L\'id ne correspond à aucun signalement'))
+                return next(errorUtils.notFound('L\'id ne correspond à aucun signalement'))
             }
             //si le signalement existe, on peut le modifier
             const updatedReport = await adminService.update(reportId, newReportsInfos, adminId);
@@ -72,7 +71,6 @@ const adminController = {
             res.status(200).json(updatedReport);
 
         } catch (err) {
-            console.error(err.stack);
             next(err);
         }
     },
@@ -94,7 +92,6 @@ const adminController = {
             }
             res.status(200).json(dataToSend);
         } catch (err) {
-            console.error(err.stack);
             next(err);
         }
     },
@@ -115,13 +112,12 @@ const adminController = {
             const scenario = await scenarioService.findById(scenarioId)
 
             if (!scenario) {
-                return next(errorUtils.create(404, 'Vous essayez de modifier un scenario qui n\'existe pas (ID inconnue)'))
+                return next(errorUtils.notFound('Ce scénario n\'existe pas'))
             }
             const updatedScenario = await scenarioService.update(scenarioId, newScenarioStatus, adminId);
             res.status(200).json(updatedScenario);
 
         } catch (err) {
-            console.error(err.stack);
             next(err);
         }
 
@@ -152,7 +148,7 @@ const adminController = {
 
             const theme = await themeService.findById(themeId);
             if (!theme) {
-                return next(errorUtils.create(404, 'Ce thème n\'existe pas'));
+                return next(errorUtils.notFound('Ce thème n\'existe pas'));
             }
 
             const updatedTheme = await themeService.update(themeId, newThemeStatus, adminId);
@@ -171,7 +167,7 @@ const adminController = {
 
     getAllUsers: async (req, res, next) => {
         try {
-            const allUsers = await adminService.find();
+            const allUsers = await userService.find();
             // On prépare notre objet JSON de réponse
             const dataToSend = {
                 users: allUsers
@@ -179,7 +175,6 @@ const adminController = {
             res.status(200).json(dataToSend);
         }
         catch (err) {
-            console.error(err.stack);
             next(err);
         }
     },
@@ -197,17 +192,14 @@ const adminController = {
             const adminId = req.user.id;
             const user = await userService.findById(userId);
 
-            if (!user) { return next(errorUtils.create(404,
-                'Cet utilisateur·ice n\'existe pas')); }
+            if (!user) { return next(errorUtils.notFound('Cet utilisateur·ice n\'existe pas')); }
 
             if (userId === adminId) {
-                return next(errorUtils.create(403,
-                    'Action impossible : vous ne pouvez pas vous rétrograder'));
+                return next(errorUtils.forbidden('Action impossible : vous ne pouvez pas vous rétrograder'));
             }
 
             if (user.role === 'admin') {
-                return next(errorUtils.create(403,
-                    'Action impossible : vous ne pouvez pas changer le status d\'un autre admin'));
+                return next(errorUtils.forbidden('Action impossible : vous ne pouvez pas changer le status d\'un autre admin'));
             }
             const updatedRole = await userService.update(userId, newInfos, adminId);
             res.status(200).json(updatedRole);
@@ -229,8 +221,7 @@ const adminController = {
             if (await scenarioService.delete(id)) {
                 return res.sendStatus(204);
             } else {
-                return next(errorUtils.create(404,
-                    'Le scenario que vous essayer de supprimer n\'existe pas'));
+                return next(errorUtils.notFound('Le scénario que vous essayez de supprimer n\'existe pas'));
             }
         } catch (err) {
             next(err);

@@ -28,7 +28,7 @@ const resourceController = {
             const resource = await resourceService.findById(resourceId);
             
             if (!resource) {
-                return next(errorUtils.create(404, 'Ressource introuvable'));
+                return next(errorUtils.notFound('Ressource introuvable'));
             }
             res.status(200).json(resource);
         } catch (err) {
@@ -63,7 +63,7 @@ const resourceController = {
             const updatedResource = await resourceService.update(id, req.body);
             
             if (!updatedResource) {
-                return next(errorUtils.create(404, 'Ressource introuvable'));
+                return next(errorUtils.notFound('Ressource introuvable'));
             }
             res.status(200).json(updatedResource);
         } catch (err) {
@@ -81,7 +81,7 @@ const resourceController = {
             const deleted = await resourceService.delete(id);
             
             if (!deleted) {
-                return next(errorUtils.create(404, 'Ressource introuvable'));
+                return next(errorUtils.notFound('Ressource introuvable'));
             }
             res.sendStatus(204); // 204 No Content (Standard pour un delete réussi)
         } catch (err) {

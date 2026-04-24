@@ -41,7 +41,6 @@ const scenarioController = {
             res.status(200).json(dataToSend);
 
         } catch (err) {
-            console.error(err.stack); // log de l'erreur
             next(err)
         }
     },
@@ -61,11 +60,10 @@ const scenarioController = {
             const scenario = await scenarioService.findById(scenarioId)
             const dataToSend = { scenario }
             if (!scenario) {
-                return next(errorUtils.create(404, 'L\'id ne correspond à aucun scenario'))
+                return next(errorUtils.notFound('L\'id ne correspond à aucun scenario'))
             } else { res.status(200).json(dataToSend) }
 
         } catch (err) {
-            console.error(err.stack);
             next(err)
         }
 
@@ -106,7 +104,7 @@ const scenarioController = {
             const dataToSend = { scenarios }
             res.status(200).json(dataToSend);
         } catch (err) {
-            console.error(err.stack);
+
             next(err)
         }
     },
@@ -133,7 +131,7 @@ const scenarioController = {
             const addedScenario = await scenarioService.create(scenarioToCreate);
 
             // Pour respecter les principes REST, on doit rajouter à la réponse, une url qui permet de consulter la valeur ajoutée
-            res.location(`/api/scenario/${scenarioData.id}`);
+           res.location(`/api/scenario/${addedScenario._id}`);
             res.status(201).json({
                 message: `Scénario de ${authorId} bien sauvegardé en base de données`,
                 data: addedScenario
@@ -141,18 +139,6 @@ const scenarioController = {
         } catch (err) {
             next(err);
         }
-    },
-
-    update: (req, res) => {
-        res.sendStatus(501);
-    },
-
-    updateStatus: (req, res) => {
-        res.sendStatus(501);
-    },
-
-    delete: (req, res) => {
-        res.sendStatus(501);
     }
 
 }

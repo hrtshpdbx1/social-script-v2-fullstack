@@ -21,7 +21,7 @@ const authController = {
 
             // On vérifie si l'email n'est pas déjà utilisé
             if (await authService.emailAlreadyExist(userToAdd.email)) {
-                return next(errorUtils.create(409, 'Cet e-mail est déjà utilisé'));
+                return next(errorUtils.conflict('Cet e-mail est déjà utilisé'));
             };
 
             //On tente d'ajouter l'utilisateur·ice
@@ -57,7 +57,7 @@ const authController = {
 
             // si pas de user trouvée, les infos de connextions ne sont pas bonnes
             if (!userFound) {
-                return next(errorUtils.create(401, 'Les informations de connexion ne sont pas bonnes'));
+                return next(errorUtils.unauthorized('Les informations de connexion ne sont pas bonnes'));
             } else {
                 // on génère un token
                 const token = await jwtUtils.generate(userFound);

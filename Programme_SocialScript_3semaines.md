@@ -398,10 +398,10 @@ Pour créer un espace spécial pour les admins, qui ne sera pas accesssibles aux
 ### Jour 15 — Polish, tests manuels, documentation
 
 **À faire**
-- [ ] Créer un fichier `API.md` à la racine avec la liste de TOUTES tes routes, leurs méthodes, leur protection, un exemple de body et un exemple de réponse. Ta bible.
-- [ ] Revoir chaque route : est-ce que les codes HTTP sont cohérents ? (200, 201, 400, 401, 403, 404, 409, 500)
-- [ ] Revoir chaque controller : est-ce que les try/catch sont partout ? Est-ce que les erreurs remontent bien au middleware global ?
-- [ ] Créer une collection Insomnia complète que tu peux exporter (avec toutes les routes, pré-remplies avec des exemples)
+- [x] Créer un fichier `API.md` à la racine avec la liste de TOUTES tes routes, leurs méthodes, leur protection, un exemple de body et un exemple de réponse. Ta bible.
+- [x] Revoir chaque route : est-ce que les codes HTTP sont cohérents ? (200, 201, 400, 401, 403, 404, 409, 500)
+- [x] Revoir chaque controller : est-ce que les try/catch sont partout ? Est-ce que les erreurs remontent bien au middleware global ?
+- [x] Créer une collection Insomnia complète que tu peux exporter (avec toutes les routes, pré-remplies avec des exemples)
 - [ ] Tester un workflow complet end-to-end : register → login → créer scénario → report → modération → approbation → lecture publique
 - [ ] Vérifier les variables d'environnement : est-ce que tout ce qui est secret est bien dans `.env` et pas en dur dans le code ?
 - [ ] Vérifier le CORS : est-ce configuré pour accepter les requêtes de ton futur front ?

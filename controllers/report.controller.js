@@ -24,7 +24,7 @@ const reportController = {
 
             // On vérifie que le scenario existe
             if (!(await scenarioService.findById(scenarioToReport))) {
-                return next(errorUtils.create(409, 'Ce scenario n\'existe pas'));
+                return next(errorUtils.notFound('Ce scénario n\'existe pas'));
             };
 
             // On vérifie si le user n'a pas déjà signalé ce scenario
@@ -34,7 +34,7 @@ const reportController = {
             });
 
             if (existingReport) {
-                return next(errorUtils.create(409, 'Vous avez déjà signalé ce scénario'));
+                return next(errorUtils.conflict('Vous avez déjà signalé ce scénario'));
             }
 
             const reportCreated = await new Report({

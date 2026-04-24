@@ -6,9 +6,11 @@ const { scenarioValidator } = require('../validators/scenario.validator');
 const scenarioValidation = require('../middlewares/scenario-validation');
 const reportController = require('../controllers/report.controller');
 
+scenarioRouter.route('/users/:id/scenarios')
+    .get(requireAuth, scenarioController.getByUser)
+
 scenarioRouter.route('/:scenarioId/report')
 .post(requireAuth, reportController.insert)
-
 
 scenarioRouter.route('/')
 .get(scenarioController.getAll)
@@ -17,12 +19,6 @@ scenarioRouter.route('/')
 scenarioRouter.route('/:id')
 .get(scenarioController.getById)  
 
-.put(scenarioController.update) //todo
-.delete(scenarioController.delete) //todo
-.patch(scenarioController.updateStatus) //todo
-
-scenarioRouter.route('/users/:id/scenarios')
-    .get(requireAuth, scenarioController.getByUser)
 
 
 // scenarioRouter.route('/users/:id/scenarios')

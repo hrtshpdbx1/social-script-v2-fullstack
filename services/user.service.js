@@ -1,6 +1,5 @@
 //user.service.js
 
-const { getUserByRole } = require('../controllers/admin.controller');
 const User = require('../models/user.model')
 
 const userService = {
@@ -20,6 +19,14 @@ const userService = {
             throw new Error(err);
         }
     },
+
+    findById: async (id) => {
+    try {
+        return await User.findById(id);
+    } catch (err) {
+        throw err;
+    }
+},
 
     update: async (userId, newInfos, adminId) => {
         try {
