@@ -8,7 +8,8 @@ const authRouter = require('./auth.router');
 const difficultyRouter = require('./difficulties.router');
 const scenarioRouter = require('./scenarios.router');
 const themeRouter = require('./themes.router')
-
+const resourceCategoryRouter = require('./resourceCategory.router');
+const resourceRouter = require('./resource.router');
 
 // ! 1) Créer un objet "routeur" (router)
 const router = require('express').Router();
@@ -26,6 +27,9 @@ router.use('/difficulties/:difficultyId/themes', themeRouter)
 // http://localhost:3000/api/difficulties/:difficultyId/themes/:themeId/scenarios
 router.use('/auth', authRouter)
 router.use('/admin', adminRouter)
+router.use('/resource-categories', resourceCategoryRouter);
+router.use('/resources', resourceRouter);
+
 
 
 // ! 3) Middlewares d'erreur

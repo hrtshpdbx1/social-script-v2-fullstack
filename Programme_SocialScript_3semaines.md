@@ -365,10 +365,10 @@ Pour créer un espace spécial pour les admins, qui ne sera pas accesssibles aux
 ### Jour 13 — Gestion des utilisateurs (admin uniquement)
 
 **À faire**
-- [ ] `GET /admin/users` : liste tous les users. Protégée par `requireRole('admin')` uniquement.
-- [ ] `PATCH /admin/users/:userId/role` : permet à un admin de promouvoir un user au rôle de modérateur (ou de rétrograder). Protégée admin uniquement.
-- [ ] ⚠️ Attention : un admin ne doit pas pouvoir rétrograder un autre admin ? Ou pouvoir se rétrograder lui-même ? Pense à ces edge cases.
-- [ ] `DELETE /admin/scenarios/:scenarioId` : suppression d'un scénario. Admin uniquement (un modérateur peut rejeter, mais seul un admin peut supprimer définitivement).
+- [x] `GET /admin/users` : liste tous les users. Protégée par `requireRole('admin')` uniquement.
+- [x] `PATCH /admin/users/:userId/role` : permet à un admin de promouvoir un user au rôle de modérateur (ou de rétrograder). Protégée admin uniquement.
+- [x] ⚠️ Attention : un admin ne doit pas pouvoir rétrograder un autre admin ? Ou pouvoir se rétrograder lui-même ? Pense à ces edge cases.
+- [x] `DELETE /admin/scenarios/:scenarioId` : suppression d'un scénario. Admin uniquement (un modérateur peut rejeter, mais seul un admin peut supprimer définitivement).
 
 **Questions à te poser**
 - Comment protéger contre le cas où il ne resterait plus aucun admin dans la base ?
@@ -381,14 +381,14 @@ Pour créer un espace spécial pour les admins, qui ne sera pas accesssibles aux
 ### Jour 14 — Ressources et catégories
 
 **À faire**
-- [ ] Créer `models/resourceCategory.model.js` et `models/resource.model.js` (avec ref vers category)
-- [ ] Routes publiques en lecture :
+- [x] Créer `models/resourceCategory.model.js` et `models/resource.model.js` (avec ref vers category)
+- [x] Routes publiques en lecture :
   - `GET /resource-categories` : liste des catégories
   - `GET /resource-categories/:categoryId/resources` : ressources d'une catégorie (filtrées sur `isPublished: true`)
   - `GET /resources/:resourceId` : détail d'une ressource
-- [ ] Routes protégées admin :
+- [x] Routes protégées admin :
   - `POST /resources` + `PATCH /resources/:id` + `DELETE /resources/:id`
-- [ ] Insérer quelques catégories et ressources de test via Insomnia
+- [x] Insérer quelques catégories et ressources de test via Insomnia
 
 **Questions à te poser**
 - Est-ce que le modèle de "ressource" est exactement le même que tes scénarios côté routes ? Remarque les similitudes avec ce que tu as déjà fait pour les scénarios.
