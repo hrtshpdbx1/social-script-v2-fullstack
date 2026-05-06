@@ -14,6 +14,13 @@ const { PORT, DB_CONNECTION } = process.env;
 // ? Pour que l'API comprenne quand du JSON arrive dans le body de la requête
 server.use(express.json());
 
+const cors = require('cors');
+
+server.use(cors({
+    origin: process.env.CORS_ORIGIN,
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // ? 3) Branchement des routes
 const router = require('./routes') // indique où le routing se trouve
@@ -40,10 +47,3 @@ startServer();
 
 // * dot.env --> Librarie pas aussi moderne que la fonctionnalité native de Node
 
-const cors = require('cors');
-
-server.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));

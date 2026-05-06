@@ -7,7 +7,7 @@ const scenarioValidator = yup.object({
     title: yup.string().trim().required().min(3).max(50),
     context: yup.string().trim().required().min(3).max(200),
     characterName: yup.string().trim().required().min(2).max(50),
-    characterDialogue: yup.string().trim().required().min(3).max(100),
+    characterDialogue: yup.string().trim().required().min(3).max(300),
     characterAvatarSeed: yup.string().trim().required().min(3).max(300),
     choices: yup.array().of(
         yup.object({
