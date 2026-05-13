@@ -6,8 +6,8 @@ const difficultyService = {
      // Fonction async pour trouver tous les difficultés dans la DB
     find: async () => { 
         try {
-            const difficulties = await Difficulty.find()
-            // une fois les données récupérées, retourne au controller
+            const difficulties = await Difficulty.find().sort({ order: 1 })
+            // une fois les données récupérées et triée, retourne au controller
             return difficulties;
         }
 
