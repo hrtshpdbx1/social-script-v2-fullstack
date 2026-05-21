@@ -17,7 +17,7 @@ const reportController = {
     insert: async (req, res, next) => {
         try {
             const reportToAdd = req.body;
-            const reporterId = req.user.id;      // pour la DB (ObjectId)
+            const reporterId = req.user._id;      // pour la DB (ObjectId)
             const reporterEmail = req.user.email; // pour le message de réponse
             const reporterRole = req.user.role;
             const scenarioToReport = req.params.scenarioId; // on récupére le param de l'URL

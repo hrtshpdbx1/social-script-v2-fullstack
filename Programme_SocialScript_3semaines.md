@@ -445,3 +445,8 @@ Pour créer un espace spécial pour les admins, qui ne sera pas accesssibles aux
 
 Mais ça, c'est quand tu auras fini la v1 proprement.
 
+
+- [x] Créer le middleware optionalAuth (nouveau fichier ou ajout dans auth.middleware.js)
+- [x] Modifier getAllThemes (ou la fonction fusionnée) pour appliquer le filtre $or
+- [x] Ajouter optionalAuth sur la route GET /themes
+- [x] Vérifier que POST /themes injecte bien createdBy depuis req.user

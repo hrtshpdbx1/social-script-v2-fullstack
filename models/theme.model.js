@@ -31,6 +31,12 @@ const themeSchema = new Schema({
         default: 'pending' // En attente par défaut à la création
     },
 
+    createdBy : {
+        type: Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+
     reviewedBy: {
         type: Types.ObjectId,
         ref: 'User',

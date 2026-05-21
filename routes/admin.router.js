@@ -1,7 +1,8 @@
 const adminController = require('../controllers/admin.controller');
 const scenarioController = require('../controllers/scenario.controller');
 const themeController = require('../controllers/theme.controller');
-const requireAuth = require('../middlewares/auth/auth.middleware');
+// Après
+const { requireAuth } = require('../middlewares/auth/auth.middleware');
 const requireRole = require('../middlewares/auth/role.middleware');
 
 // admin.router.js

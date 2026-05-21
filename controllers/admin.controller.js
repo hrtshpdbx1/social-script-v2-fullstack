@@ -56,7 +56,7 @@ const adminController = {
         try {
             const reportId = req.params.reportId; // On récupère l'iD des paramètres de l'URL (genre /reports/12345)
             const newReportsInfos = req.body; // corps de la requête
-            const adminId = req.user.id; // On récupère l'ID du user 
+            const adminId = req.user._id; // On récupère l'ID du user 
 
             //  aller chercher le report dans la DB
             const report = await adminService.findById(reportId)
@@ -108,7 +108,7 @@ const adminController = {
         try {
             const scenarioId = req.params.scenarioId;
             const newScenarioStatus = req.body;
-            const adminId = req.user.id
+            const adminId = req.user._id
             const scenario = await scenarioService.findById(scenarioId)
 
             if (!scenario) {
@@ -143,8 +143,8 @@ const adminController = {
         try {
             const themeId = req.params.themeId;
             const newThemeStatus = req.body;
-            const adminId = req.user.id;
-            // ⚠️ ne pas mettre req.user.userId; 
+            const adminId = req.user._id;
+         
 
             const theme = await themeService.findById(themeId);
             if (!theme) {
@@ -189,7 +189,7 @@ const adminController = {
         try {
             const userId = req.params.userId;
             const newInfos = req.body;
-            const adminId = req.user.id;
+            const adminId = req.user._id;
             const user = await userService.findById(userId);
 
             if (!user) { return next(errorUtils.notFound('Cet utilisateur·ice n\'existe pas')); }

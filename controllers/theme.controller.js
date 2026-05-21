@@ -4,60 +4,53 @@ const themeService = require('../services/theme.service')
 const themeController = {
 
     /**
-* Récupérer tous les Thèmes
+*     /**
+     * Récupérer les thèmes visibles par l'utilisateur courant.
+     * - Visiteur non connecté : uniquement les thèmes 'approved'
+     * - Utilisateur connecté : 'approved' + ses propres 'pending'
+     * - Filtrage optionnel par difficulté via ?difficultyId=xxx
 * @param { Request } req
 * @param { Response } res
 * @param { NextFunction } next
 */
 
-    // todo : vérifier utilité de cette fonctions
     getAllThemes: async (req, res, next) => {
-
         try {
-            const allThemes = await themeService.find()
-            const dataToSend = {
-                themes: allThemes
+            //  Filtre de visibilité 
+            const filter = {
+                difficultyId: req.params.difficultyId,
+                $or: [
+                    { status: 'approved' },
+                    { 
+                        status: 'pending',
+                        createdBy: req.user?._id
+                    }
+                ]
             };
-            // Si tout s'est bien passé, renvoie 200 et data
-            res.status(200).json(dataToSend);
-        } catch (err) {
-            next(err); // Error Middleware de index.js 
-        }
 
+            const themes = await themeService.find(filter);
+
+            return res.status(200).json({ themes });
+        } catch (err) {
+            return next(err);
+        }
     },
-
-    getThemeByDifficulty: async (req, res, next) => {
-        try {
-            const { difficultyId } = req.params;
-            // On récupère le difficultyId depuis l'URL
-            const filteredThemes = await themeService.findByDifficultyId(difficultyId);
-
-            // on demande au themeService de trouver les thème associé à ce difficultyId 
-            const dataToSend = {
-                themes: filteredThemes
-            };
-            res.status(200).json(dataToSend);
-            // on renvoit un tableau (vide ou plein)
-        } catch (err) {
-            next(err);
-        }
-
-    }, 
 
     insert: async (req, res, next) => {
         try {
-        const themeToAdd = {
-            ...req.body,
-            difficultyId: req.params.difficultyId  // ← récupéré depuis l'URL
-        };
-        const newTheme = await themeService.create(themeToAdd);
-            
+            const themeToAdd = {
+                ...req.body,
+                difficultyId: req.params.difficultyId,  // ← récupéré depuis l'URL
+                createdBy: req.user._id   //  depuis le token vérifié
+            };
+            const newTheme = await themeService.create(themeToAdd);
+
             res.status(201).json({
                 message: "Nouveau thème proposé avec succès. En attente de validation.",
                 data: newTheme
             });
         } catch (err) {
-            next(err);
+             return next(err);
         }
     }
 

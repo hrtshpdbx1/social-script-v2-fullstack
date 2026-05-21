@@ -119,7 +119,7 @@ const scenarioController = {
     insert: async (req, res, next) => {
         try {
             const scenarioData = req.body;
-            const authorId = req.user.id;
+            const authorId = req.user._id;
 
             // On fusionne les données du body avec l'ID de l'auteur
             const scenarioToCreate = {

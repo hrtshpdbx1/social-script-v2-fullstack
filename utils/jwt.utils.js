@@ -20,7 +20,7 @@ const jwtUtils = {
             // Les claims, sont les données qu'on met dans notre payload
 
             const payload = { 
-                id : user._id, /* id est un claims du payload */
+                _id : user._id, /* id est un claims du payload */
                 role : user.role,
                 email : user.email
             }

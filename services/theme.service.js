@@ -22,17 +22,17 @@ const themeService = {
         }
     },
 
-    findByDifficultyId: async (difficultyId) => {
-        try {
-            const themes = await Theme.find({ difficultyId: difficultyId })
-            return themes;
-        }
-        catch (err) {
+    // findByDifficultyId: async (difficultyId) => {
+    //     try {
+    //         const themes = await Theme.find({ difficultyId: difficultyId })
+    //         return themes;
+    //     }
+    //     catch (err) {
 
-            console.log(err);
-            throw new Error(err);
-        }
-    }, 
+    //         console.log(err);
+    //         throw new Error(err);
+    //     }
+    // }, 
 
     findById: async (id) => {
         try {

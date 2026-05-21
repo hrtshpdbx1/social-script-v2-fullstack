@@ -1,6 +1,7 @@
 const resourceRouter = require('express').Router();
 const resourceController = require('../controllers/resource.controller');
-const requireAuth = require('../middlewares/auth/auth.middleware');
+// Après
+const { requireAuth } = require('../middlewares/auth/auth.middleware');
 const requireRole = require('../middlewares/auth/role.middleware');
 
 // route publique

@@ -17,7 +17,7 @@ const userAuthorization = () => {
         console.log("userRouterId " + userRouterId);
 
         // ? 2) Récupérer l'id se trouvant dans le token et qui a été rajouté à la requète
-        const userId = req.user.id; //récupéré dans auth.m.js
+        const userId = req.user._id; //récupéré dans auth.m.js
         console.log("userId " + userId);
 
         // ? 3) Récupérer le rôle de l'utilisateur·ices qui fait le requète car s'il est admin, il a le droit
