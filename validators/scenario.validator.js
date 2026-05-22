@@ -9,13 +9,13 @@ const scenarioValidator = yup.object({
     characterName: yup.string().trim().required().min(2).max(50),
     characterDialogue: yup.string().trim().required().min(3).max(300),
     characterAvatarSeed: yup.string().trim().required().min(3).max(300),
+     keyTakeaway: yup.string().trim().required().min(3).max(200),
     choices: yup.array().of(
         yup.object({
             responseText: yup.string().required(),
             reactionText: yup.string().required(),
             analysis: yup.string().required(),
             consequence: yup.string().required(),
-            keyTakeaway: yup.string().required(),
         })
     ).min(3).max(3),
 

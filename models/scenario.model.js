@@ -17,10 +17,6 @@ const choiceSchema = new Schema({
     consequence: {
         type: String,
         required: true
-    },
-    keyTakeaway: {
-        type: String,
-        required: true
     }
 },
     { _id: false });
@@ -59,6 +55,11 @@ const scenarioSchema = new Schema(
                 validator: function (arr) { return arr.length === 3; },
                 message: 'Un scénario doit avoir 3 choix'
             }
+        },
+        keyTakeaway: {
+            type: String,
+            required: true, 
+             trim: true
         },
         status: {
             type: String,
