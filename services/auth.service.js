@@ -7,7 +7,7 @@ const authService = {
     findByCredentials: async (credentials) => {
         try {
             //Trouver l'utilisateur dont le mail est égal à celui reçu, si pas d'utilisateur trouvé, on sort
-            const userFound = await User.findOne({ email: credentials.email });
+            const userFound = await User.findOne({ email: credentials.email }).select('+password');
 
             if (!userFound) {
                 return undefined;

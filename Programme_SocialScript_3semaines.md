@@ -450,3 +450,14 @@ Mais ça, c'est quand tu auras fini la v1 proprement.
 - [x] Modifier getAllThemes (ou la fonction fusionnée) pour appliquer le filtre $or
 - [x] Ajouter optionalAuth sur la route GET /themes
 - [x] Vérifier que POST /themes injecte bien createdBy depuis req.user
+
+
+
+
+TO DO :
+
+
+Route : GET /users/me, protégée par requireAuth.
+Controller : getMe — récupère l'_id depuis le token décodé (déjà mis dans req.user par ton middleware), demande au service le user correspondant, le renvoie au front sans le password.
+Service : tu as déjà probablement un findById côté user — sinon, on l'ajoute.
+Frontend : un atom userAtom qui appelle l'endpoint après login, et un endroit qui affiche firstName dans le Header.

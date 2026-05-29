@@ -10,6 +10,7 @@ const scenarioRouter = require('./scenarios.router');
 const themeRouter = require('./themes.router')
 const resourceCategoryRouter = require('./resourceCategory.router');
 const resourceRouter = require('./resource.router');
+const userRouter = require('./user.router');
 
 // ! 1) Créer un objet "routeur" (router)
 const router = require('express').Router();
@@ -29,6 +30,7 @@ router.use('/auth', authRouter)
 router.use('/admin', adminRouter)
 router.use('/resource-categories', resourceCategoryRouter);
 router.use('/resources', resourceRouter);
+router.use('/users', userRouter);
 
 
 
