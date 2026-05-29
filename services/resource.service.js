@@ -1,7 +1,16 @@
 const Resource = require('../models/ressource.model');
 
 const resourceService = {
-    // PUBLIC : Trouver les ressources publiées d'une catégorie spécifique
+ // Trouver toutes les ressources publiées
+findAll: async () => {
+    try {
+        return await Resource.find({ isPublished: true });
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+},
+
     findByCategory: async (categoryId) => {
         try {
             return await Resource.find({ categoryId: categoryId, isPublished: true });

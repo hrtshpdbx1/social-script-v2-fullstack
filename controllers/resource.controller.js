@@ -2,13 +2,26 @@ const resourceService = require('../services/resource.service');
 const errorUtils = require('../utils/error.utils');
 
 
- 
+
 const resourceController = {
     /**
-     * GET /resource-categories/:categoryId/resources
-     * Liste les ressources publiées pour une catégorie
+     * GET /resources
+     * Liste toutes les ressources publiées (public)
      */
-    getPublishedResourcesByCategory  : async (req, res, next) => {
+    getAllResources: async (req, res, next) => {
+        try {
+            const resources = await resourceService.findAll();
+            return res.status(200).json({ resources });
+        } catch (err) {
+            next(err);
+        }
+    },
+    
+    /**
+         * GET /resource-categories/:categoryId/resources
+         * Liste les ressources publiées pour une catégorie
+         */
+    getPublishedResourcesByCategory: async (req, res, next) => {
         try {
             const { categoryId } = req.params;
             const resources = await resourceService.findByCategory(categoryId);
@@ -22,11 +35,11 @@ const resourceController = {
      * GET /resources/:resourceId
      * Détail d'une ressource
      */
-    getResourceById : async (req, res, next) => {
+    getResourceById: async (req, res, next) => {
         try {
             const { resourceId } = req.params;
             const resource = await resourceService.findById(resourceId);
-            
+
             if (!resource) {
                 return next(errorUtils.notFound('Ressource introuvable'));
             }
@@ -57,11 +70,11 @@ const resourceController = {
      * PATCH /resources/:id
      * Modification d'une ressource (Admin)
      */
-     updateResource: async (req, res, next) => {
+    updateResource: async (req, res, next) => {
         try {
             const { id } = req.params;
             const updatedResource = await resourceService.update(id, req.body);
-            
+
             if (!updatedResource) {
                 return next(errorUtils.notFound('Ressource introuvable'));
             }
@@ -79,7 +92,7 @@ const resourceController = {
         try {
             const { id } = req.params;
             const deleted = await resourceService.delete(id);
-            
+
             if (!deleted) {
                 return next(errorUtils.notFound('Ressource introuvable'));
             }

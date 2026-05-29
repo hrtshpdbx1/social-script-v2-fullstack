@@ -5,8 +5,15 @@ const { requireAuth } = require('../middlewares/auth/auth.middleware');
 const requireRole = require('../middlewares/auth/role.middleware');
 
 // route publique
+
+resourceRouter.route('/')
+    .get(resourceController.getAllResources);  
+
 resourceRouter.route('/:resourceId')
     .get(resourceController.getResourceById); 
+   
+resourceRouter.route('/:resourceId')
+    .get(resourceController.getResourceById);
 
 // modo et admin only 
 resourceRouter.use(requireAuth, requireRole('admin', 'moderator')); 

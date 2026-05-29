@@ -1,4 +1,6 @@
+const { create } = require('../models/ressource.model');
 const ResourceCategory = require('../models/ressourceCategory.model');
+const resourceService = require('./resource.service');
 
 const resourceCategoryService = {
     findAll: async () => {
@@ -8,7 +10,18 @@ const resourceCategoryService = {
             console.log(err);
             throw err;
         }
+    },
+    create: async (categoryData) => {
+        try {
+            const newCategory = new ResourceCategory(categoryData);
+            return await newCategory.save();
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
     }
 };
 
-module.exports = resourceCategoryService;
+
+
+module.exports = resourceCategoryService
