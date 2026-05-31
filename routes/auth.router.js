@@ -1,5 +1,6 @@
 // auth.router.js
 const authController = require('../controllers/auth.controller');
+const { requireAuth } = require('../middlewares/auth/auth.middleware');
 const authRouter = require('express').Router();
 
 
@@ -12,11 +13,9 @@ authRouter.route('/login')
     .post(authController.login)
 
 authRouter.route('/me')
-    .get(authRouter, (req, res) => {
-        // on appelle directement le middleware, car pas besoin d'argument
-        res.json(req.user);  // on renvoit req.user en réponse
-    }); 
-
+    .get(requireAuth, (req, res) => {
+        res.json(req.user);
+    });
 // authRouter.route('/admin')
 //     .get(requireAuthMiddleware, requireRoleMiddleware('admin'))  // on appelle requireRole avec 'admin', elle nous retourne un middleware
 

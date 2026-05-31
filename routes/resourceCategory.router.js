@@ -3,7 +3,8 @@ const categoryController = require('../controllers/resourceCategory.controller')
 const resourceController = require('../controllers/resource.controller');
 const { requireAuth } = require('../middlewares/auth/auth.middleware');
 const requireRole = require('../middlewares/auth/role.middleware');
-requireRole
+
+
 // ===== ROUTES PUBLIQUES =====
 categoryRouter.route('/')
     .get(categoryController.getAllCategories)

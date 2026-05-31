@@ -1,6 +1,6 @@
-const { create } = require('../models/ressource.model');
+
 const ResourceCategory = require('../models/ressourceCategory.model');
-const resourceService = require('./resource.service');
+
 
 const resourceCategoryService = {
     findAll: async () => {

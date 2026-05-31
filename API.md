@@ -2,6 +2,8 @@
 
 This documentation lists all available routes (endpoints) on the SocialScript API, along with their authorization levels and expected/returned data payloads.
 
+> 🔄 Doc synchronisée avec les routers (source de vérité). Ajouts récents : `GET /api/users/me`, `GET /api/resources`, `POST /api/resource-categories`.
+
 ---
 
 ## 🔐 1. Authentication (`/api/auth`)
@@ -51,10 +53,24 @@ This documentation lists all available routes (endpoints) on the SocialScript AP
   ```json
   { "id": "12345", "username": "Nickname", "email": "test@test.com", "role": "user" }
   ```
+- > ⚠️ **Doublon fonctionnel** avec `GET /api/users/me` : les deux renvoient le profil courant. C'est `/api/users/me` qui est câblée au frontend. À consolider plus tard si besoin.
 
 ---
 
-## 🧗‍♀️ 2. Difficulties & Themes (`/api/difficulties`)
+## 👤 2. Users (`/api/users`)
+
+### `GET /api/users/me`
+
+- **Description:** Retrieves the profile of the currently logged-in user. Route effectivement utilisée par le frontend (`userService.getMe`).
+- **Protection:** Logged-in user (`requireAuth`)
+- **Success Response (200 OK):**
+  ```json
+  { "id": "12345", "username": "Nickname", "email": "test@test.com", "role": "user" }
+  ```
+
+---
+
+## 🧗‍♀️ 3. Difficulties & Themes (`/api/difficulties`)
 
 ### `GET /api/difficulties`
 
@@ -104,7 +120,7 @@ This documentation lists all available routes (endpoints) on the SocialScript AP
 
 ---
 
-## 🎭 3. Scenarios & Reports (`/api/scenarios`)
+## 🎭 4. Scenarios & Reports (`/api/scenarios`)
 
 ### `GET /api/scenarios`
 
@@ -153,7 +169,7 @@ This documentation lists all available routes (endpoints) on the SocialScript AP
 
 ---
 
-## 📚 4. Resources & Categories (`/api/resources` & `/api/resource-categories`)
+## 📚 5. Resources & Categories (`/api/resources` & `/api/resource-categories`)
 
 ### `GET /api/resource-categories`
 
@@ -162,9 +178,27 @@ This documentation lists all available routes (endpoints) on the SocialScript AP
 
 ---
 
+### `POST /api/resource-categories`
+
+- **Description:** Creates a new resource category.
+- **Protection:** ⚠️ Admin Only (`requireAuth` + `requireRole('admin')`)
+- **Expected Body:**
+  ```json
+  { "name": "Podcast" }
+  ```
+
+---
+
 ### `GET /api/resource-categories/:categoryId/resources`
 
 - **Description:** Lists the published resources (`isPublished: true`) for a specific category.
+- **Protection:** Public
+
+---
+
+### `GET /api/resources`
+
+- **Description:** Lists all published resources (`isPublished: true`), all categories combined.
 - **Protection:** Public
 
 ---
@@ -202,7 +236,7 @@ This documentation lists all available routes (endpoints) on the SocialScript AP
 
 ---
 
-## 🛠️ 5. Administration (`/api/admin`)
+## 🛠️ 6. Administration (`/api/admin`)
 
 > All routes in this section require at least the **moderator** role.
 
@@ -257,6 +291,8 @@ This documentation lists all available routes (endpoints) on the SocialScript AP
 
 - **Description:** Approves or rejects a theme.
 - **Protection:** Moderator or Admin
+
+> ⚠️ Pas de route `DELETE` sur les thèmes côté admin (ni soft ni hard delete). Si le frontend en a besoin (`themeService.reject`), la route est à construire.
 
 ---
 

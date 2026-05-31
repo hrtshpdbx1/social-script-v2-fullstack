@@ -12,9 +12,6 @@ resourceRouter.route('/')
 resourceRouter.route('/:resourceId')
     .get(resourceController.getResourceById); 
    
-resourceRouter.route('/:resourceId')
-    .get(resourceController.getResourceById);
-
 // modo et admin only 
 resourceRouter.use(requireAuth, requireRole('admin', 'moderator')); 
 

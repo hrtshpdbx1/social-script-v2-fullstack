@@ -6,8 +6,10 @@ const adminService = {
 
     find: async (filter, fields = null) => {
         try {
-            const reports = await Report.find(filter).select(fields)
-
+            const reports = await Report.find(filter)
+                .populate('reporterId', 'firstName lastName')
+                .populate('reviewedBy', 'firstName lastName')
+                .select(fields);
             return reports
         }
         catch (err) {
@@ -40,7 +42,7 @@ const adminService = {
                     reviewedBy: adminId,
                     reviewedAt: new Date()
                 },
-               { returnDocument: 'after' }     //  pour renvoyer le document MODIFIÉ,(renvoie l'ancien par défaut)
+                { returnDocument: 'after' }     //  pour renvoyer le document MODIFIÉ,(renvoie l'ancien par défaut)
             );
             return updatedReport
         }
